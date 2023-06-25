@@ -43,17 +43,12 @@
   height: 24px;
 }
 
-/* Estilos para el tema claro */
+
+/* Estilos adicionales para el elemento <nav> en el tema claro */
 .App.light {
   background-color: #f8f8f8;
 }
 
-/* Estilos para el tema oscuro */
-.App.dark {
-  background-color: #333;
-}
-
-/* Estilos adicionales para el elemento <nav> en el tema claro */
 .App.light p {
   color: #000;
 }
@@ -62,7 +57,16 @@
   color: #000;
 }
 
+.App.light h1 {
+  color: #000;
+}
+/*fin estilos tema claro*/
+
 /* Estilos adicionales para el elemento <nav> en el tema oscuro */
+.App.dark {
+  background-color: #333;
+}
+
 .App.dark p {
   color: #fff;
 }
@@ -70,6 +74,12 @@
 .App.dark label {
   color: #fff;
 }
+
+.App.dark h1 {
+  color: #fff;
+}
+
+/*fin estilos tema oscuro*/
 
 .scrollable-div {
   height: fit-content;

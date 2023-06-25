@@ -5,14 +5,13 @@ import './App.css';
 
 import FlowAndSelectedOptionContext from './Controllers/FlowAndSelectedOptionContext';
 
-//componentes comunes para todos
-import AlbumMaker from './AlbumMaker';
+import Landing from './Landing';
 
 function App() {
 
   return (
     <FlowAndSelectedOptionContext>
-      <AlbumMaker/>
+      <Landing/>
     </FlowAndSelectedOptionContext>
   );
 }
