@@ -8,6 +8,7 @@ const initialState = {
     password: "",
     email: "",
     image: "",
+    rol:""
   }
 };
 
@@ -16,9 +17,7 @@ const authReducer = (state = initialState, action) => {
     case 'LOGIN':
       return {
         loggedIn: true,
-        user: {
-          email: action.payload.email
-        }
+        user: action.payload.user
       };
     case 'LOGOUT':
       return {

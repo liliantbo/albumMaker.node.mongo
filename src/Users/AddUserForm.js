@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {  MDBBtn} from 'mdb-react-ui-kit';
+import { ROL_USER } from "../commonComponents/Properties";
 
 const AddUserForm = (props) => {
   const isRequired=false;
@@ -11,6 +12,7 @@ const AddUserForm = (props) => {
     password: "",
     email: "",
     image: "",
+    rol:ROL_USER
   };
   const [user, setUser] = useState(initialFormState);
 

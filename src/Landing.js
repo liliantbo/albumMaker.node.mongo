@@ -13,10 +13,15 @@ import { newAlbum, changeTheme } from './reducers/Actions';
 
 import AlbumFooter from './AlbumFooter';
 import AlbumMakerClient from './AlbumMakerClient';
+import AlbumMakerAdmin from './AlbumMakerAdmin';
+import { ROL_USER } from './commonComponents/Properties';
 
 export default function Landing() {
   const loggedIn = useSelector(state => state.auth.loggedIn);
+  const {rol} = useSelector(state => state.auth.user);
   console.log("selector state.auth.loggedIn ", loggedIn);
+  console.log("selector state.auth.user ", rol);
+  const isUser=rol===ROL_USER;
 
   const { state, dispatch } = useFlow();
   const { theme } = state;
@@ -39,9 +44,9 @@ export default function Landing() {
   const renderContent = () => {
     switch (loggedIn) {
         case false:
-            return <Login />;
+            return <Login/>;
         case true:
-            return <AlbumMakerClient />;
+            return isUser?<AlbumMakerClient/>:<AlbumMakerAdmin/>;
         default:
             return null;
     }

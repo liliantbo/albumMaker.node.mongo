@@ -26,7 +26,7 @@ router.post('/', function (req, res){
 });
 
 router.post('/login', (req, res) => {
-
+    console.log('Controllers :: Admin :: Login :: INICIO')
     console.log(req.body);
     const{user}=req.body;
     const { 

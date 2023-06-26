@@ -16,6 +16,7 @@ import { newAlbum, changeTheme } from '../reducers/Actions';
 
 export default function Login() {
   const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
   const dispatch1 = useDispatch();
   const [users, setUsers] = useState([]);
 
@@ -36,6 +37,7 @@ export default function Login() {
       .post("http://localhost:3000/users", { user })
       .then((response) => {
         console.log('Data:', response)
+        setSuccess("¡Registro exitoso! 🎉 Por favor, inicia sesión para comenzar a dar vida a tus álbumes en Album Maker. ✨");
         setUsers([user, ...users]);
       });
   };
@@ -45,8 +47,8 @@ export default function Login() {
     axios
       .post("http://localhost:3000/users/login", { user })
       .then((response) => {
-        dispatch1(login(user.email, user.password));
-        console.log('Data:', response)
+        dispatch1(login(response.data));
+        console.log('Data:', response.data)
       }).catch((error) => {
         console.error('Error:', error);
         setError("Usuario o password incorrectos");
@@ -71,7 +73,8 @@ export default function Login() {
 
   return (
       <main className="d-flex flex-column ">
-        {error && <Alert variant="danger">{error}</Alert>} {/* Mostrar la alerta en caso de error */}
+        {error && <Alert variant="danger">{error}</Alert>}
+        {success && <Alert variant="success">{success}</Alert>}
         <h1>Captura tus momentos, preserva tus recuerdos</h1>
         <p>Descubre nuestros álbumes fotográficos físicos y revive cada instante en tus manos</p>
         <button type="button" className="m-3 p3
