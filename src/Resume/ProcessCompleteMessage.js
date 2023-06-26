@@ -1,6 +1,6 @@
 import React from 'react';
-import { useFlow } from '../Controllers/FlowAndSelectedOptionContext';
-import { FLOW_SAVED, MESSAGE_PROCESSED, MESSAGE_SAVED } from '../Controllers/Properties';
+import { useFlow } from '../reducers/FlowAndSelectedOptionContext';
+import { FLOW_SAVED, MESSAGE_PROCESSED, MESSAGE_SAVED } from '../commonComponents/Properties';
 
 
 export default function ProcessSuccess () {

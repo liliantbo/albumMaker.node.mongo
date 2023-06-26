@@ -1,8 +1,8 @@
-import { useFlow } from "../Controllers/FlowAndSelectedOptionContext";
-import { billingComplete } from '../Controllers/Actions';
+import { useFlow } from "../reducers/FlowAndSelectedOptionContext";
+import { billingComplete } from '../reducers/Actions';
 
 import BillingAndShippingForm from './BillingForm';
-import { FLOW_BILLING } from "../Controllers/Properties";
+import { FLOW_BILLING } from "../commonComponents/Properties";
 
 export default function BillingAndShipping() {
   const { state, dispatch } = useFlow();

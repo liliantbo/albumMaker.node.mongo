@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useFlow } from "../Controllers/FlowAndSelectedOptionContext";
-import { updateBilling, updateShipping } from '../Controllers/Actions';
-import provinciasCantones from "../Controllers/provincias.json"
+import { useFlow } from "../reducers/FlowAndSelectedOptionContext";
+import { updateBilling, updateShipping } from '../reducers/Actions';
+import provinciasCantones from "../commonComponents/provincias.json"
 
 export default function BillingForm() {
   const { state, dispatch } = useFlow();

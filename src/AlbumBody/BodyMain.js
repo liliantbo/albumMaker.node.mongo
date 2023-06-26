@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { useFlow } from '../Controllers/FlowAndSelectedOptionContext';
+import { useFlow } from '../reducers/FlowAndSelectedOptionContext';
 import {
     OPTION_ALBUM, OPTION_BILL,
     OPTION_RESUME, OPTION_CREATE,
     FLOW_PROCESED,
     FLOW_SAVED
-} from '../Controllers/Properties'
+} from '../commonComponents/Properties'
 
 //componente de barra de progreso
 import ProgressBar from "../ProgressBar"

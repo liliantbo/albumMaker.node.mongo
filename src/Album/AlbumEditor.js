@@ -1,7 +1,7 @@
 import { React, useRef} from "react";
 
-import { useFlow } from "../Controllers/FlowAndSelectedOptionContext";
-import { albumComplete, updateImageList } from '../Controllers/Actions';
+import { useFlow } from "../reducers/FlowAndSelectedOptionContext";
+import { albumComplete, updateImageList } from '../reducers/Actions';
 
 import AlbumTemplate from './AlbumTemplate';
 

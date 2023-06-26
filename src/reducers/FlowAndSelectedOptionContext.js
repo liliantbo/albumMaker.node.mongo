@@ -1,6 +1,6 @@
 import React, { createContext, useReducer, useContext } from 'react';
 import { FlowAndSelectedOptionReducer } from './FlowAndSelectedOptionReducer';
-import { FLOW_NEW, OPTION_ALBUM, TEMPLATE_BIRTHDAY, THEME_LIGHT } from './Properties';
+import { FLOW_NEW, OPTION_ALBUM, TEMPLATE_BIRTHDAY, THEME_LIGHT } from '../commonComponents/Properties';
 
 export const FlowContext = createContext();
 

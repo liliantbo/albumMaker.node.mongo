@@ -3,9 +3,9 @@ import { ReactComponent as AlbumIcon } from './change-record-type.svg'
 import { ReactComponent as BillIcon } from './identity.svg'
 import { ReactComponent as ResumeIcon } from './finished.svg'
 
-import { useFlow } from '../Controllers/FlowAndSelectedOptionContext';
-import { goToAlbum, goToBill, goToResume } from '../Controllers/Actions';
-import { OPTION_ALBUM, OPTION_BILL, OPTION_RESUME } from '../Controllers/Properties'
+import { useFlow } from '../reducers/FlowAndSelectedOptionContext';
+import { goToAlbum, goToBill, goToResume } from '../reducers/Actions';
+import { OPTION_ALBUM, OPTION_BILL, OPTION_RESUME } from '../commonComponents/Properties'
 
 export default function SideBar({ children }) {
 

@@ -3,7 +3,7 @@ import {
     FLOW_PROCESS, FLOW_SAVED, OPTION_ALBUM, OPTION_BILL,
     OPTION_RESUME, TEMPLATE_BIRTHDAY, TEMPLATE_LOVE,
     THEME_DARK, THEME_LIGHT
-} from "./Properties";
+} from "../commonComponents/Properties";
 
 export function FlowAndSelectedOptionReducer(state, action) {
     switch (action.type) {

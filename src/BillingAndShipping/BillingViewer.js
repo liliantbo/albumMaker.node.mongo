@@ -1,5 +1,5 @@
-import { useFlow } from '../Controllers/FlowAndSelectedOptionContext';
-import {OPTION_BILL, THEME_DARK} from '../Controllers/Properties'
+import { useFlow } from '../reducers/FlowAndSelectedOptionContext';
+import {OPTION_BILL, THEME_DARK} from '../commonComponents/Properties'
 
 export default function BillingViewer() {
     const {state}=useFlow();

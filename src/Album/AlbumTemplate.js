@@ -1,10 +1,10 @@
 import React from "react";
-import { useFlow } from "../Controllers/FlowAndSelectedOptionContext";
+import { useFlow } from "../reducers/FlowAndSelectedOptionContext";
 import AlbumTemplateBirthday from './AlbumTemplateBirthday'
 import AlbumTemplateLove from "./AlbumTemplateLove";
 import { FLOW_PROCESED, FLOW_SAVED, OPTION_ALBUM, 
-    TEMPLATE_BIRTHDAY, TEMPLATE_LOVE } from "../Controllers/Properties";
-import { changeToBirthdayTemplate, changeToLoveTemplate } from "../Controllers/Actions";
+    TEMPLATE_BIRTHDAY, TEMPLATE_LOVE } from "../commonComponents/Properties";
+import { changeToBirthdayTemplate, changeToLoveTemplate } from "../reducers/Actions";
 
 export default function AlbumTemplate({ children }) {
     const { state, dispatch } = useFlow();

@@ -6,9 +6,9 @@ import SaveHandler from '../Aws/SaveHandler';
 //Contextos:
 //para el control del estadoflujo (new, onBilling, onProcess, Proccessed)
 //y para la opcion del menu donde se encuentra el usuario (album, bill, resume)
-import { useFlow } from "../Controllers/FlowAndSelectedOptionContext";
-import { processComplete, saveComplete } from '../Controllers/Actions';
-import { FLOW_PROCESED, FLOW_SAVED } from '../Controllers/Properties';
+import { useFlow } from "../reducers/FlowAndSelectedOptionContext";
+import { processComplete, saveComplete } from '../reducers/Actions';
+import { FLOW_PROCESED, FLOW_SAVED } from '../commonComponents/Properties';
 
 export default function OrderResume() {
 

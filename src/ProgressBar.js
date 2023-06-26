@@ -1,8 +1,8 @@
 import { React } from "react";
-import {useFlow} from './Controllers/FlowAndSelectedOptionContext';
+import {useFlow} from './reducers/FlowAndSelectedOptionContext';
 import { FLOW_BILLING, FLOW_NEW, FLOW_PROCESED, 
     FLOW_PROCESS, FLOW_SAVED, OPTION_ALBUM, OPTION_BILL, 
-    OPTION_RESUME } from "./Controllers/Properties";
+    OPTION_RESUME } from "./commonComponents/Properties";
 
 export default function ProgressBar() {
     const { state }=useFlow();
