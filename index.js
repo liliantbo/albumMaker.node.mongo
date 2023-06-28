@@ -24,7 +24,6 @@ app.set('view engine', 'ejs');
 
 app.use('/users', AdminUsers)
 
-
 app.use(express.static(path.join(__dirname, "build")));
 
 

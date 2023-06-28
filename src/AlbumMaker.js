@@ -1,12 +1,12 @@
 import React from 'react';
 import { ReactComponent as CreateNewAlbumIcon } from './document-new.svg'
-import { ReactComponent as ToogleThemeIcon } from './theme-light-dark.svg'
+import { ReactComponent as ToogleThemeIcon } from './Users/theme-light-dark.svg'
 import './App.css';
 
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
-import { useFlow } from './Controllers/FlowAndSelectedOptionContext';
-import { newAlbum, changeTheme } from './Controllers/Actions';
+import { useFlow } from './reducers/FlowAndSelectedOptionContext';
+import { newAlbum, changeTheme } from './reducers/Actions';
 
 import AlbumFooter from './AlbumFooter';
 import AlbumBody from './AlbumBody/BodyOptions';
@@ -33,30 +33,6 @@ export default function AlbumMaker() {
 
   return (
     <div className={`App ${theme}`}>
-      <header className="d-flex flex-row bg-primary bd-highlight" style={{ height: '10vh' }}>
-        <div className="me-auto p-2 bd-highlight">
-          <p className="logo text-light">Album Maker</p>
-        </div>
-        <ul className="nav flex-row d-flex p-2 bd-highlight 
-        justify-content-end align-items-stretch">
-          <li className="nav-item me-3">
-            <OverlayTrigger placement="bottom" overlay={newAlbumTooltip}>
-              <button className="btn btn-primary btn-focus shadow-none"
-                onClick={newAlbumHandler}>
-                <CreateNewAlbumIcon aria-hidden="true" />
-              </button>
-            </OverlayTrigger>
-          </li>
-          <li className="nav-item me-3">
-            <OverlayTrigger placement="bottom" overlay={changeThemeTooltip}>
-              <button className="btn btn-primary btn-focus shadow-none"
-                onClick={changeThemeHandler}>
-                <ToogleThemeIcon aria-hidden="true" />
-              </button>
-            </OverlayTrigger>
-          </li>
-        </ul>
-      </header >
       <div className="d-flex flex-row " style={{ height: '83vh' }}>
         <AlbumBody>
           <BodyMain />

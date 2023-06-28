@@ -4,6 +4,7 @@ export const ROL_OPERATOR="OPERADOR";
 export const ROL_ADMIN="ADMIN";
 
 //valores que puede tomar el estado flow
+export const FLOW_LIST = 'list';
 export const FLOW_NEW = 'new';
 export const FLOW_BILLING ='onBilling';
 export const FLOW_PROCESS='onProcess';

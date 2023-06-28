@@ -1,11 +1,11 @@
 import React, { createContext, useReducer, useContext } from 'react';
 import { FlowAndSelectedOptionReducer } from './FlowAndSelectedOptionReducer';
-import { FLOW_NEW, OPTION_ALBUM, TEMPLATE_BIRTHDAY, THEME_LIGHT } from '../commonComponents/Properties';
+import { FLOW_LIST, OPTION_ALBUM, TEMPLATE_BIRTHDAY, THEME_LIGHT } from '../commonComponents/Properties';
 
 export const FlowContext = createContext();
 
 const initialState = {
-  flow: FLOW_NEW,
+  flow: FLOW_LIST,
   selectedOption: OPTION_ALBUM,
   theme: THEME_LIGHT,
   template:TEMPLATE_BIRTHDAY,

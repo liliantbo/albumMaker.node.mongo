@@ -1,65 +1,120 @@
-import React from 'react';
-import { ReactComponent as CreateNewAlbumIcon } from './document-new.svg'
-import { ReactComponent as ToogleThemeIcon } from './Users/theme-light-dark.svg'
+import React, {useState, useEffect} from 'react';
 import './App.css';
 
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-
 import { useFlow } from './reducers/FlowAndSelectedOptionContext';
-import { newAlbum, changeTheme } from './reducers/Actions';
-
-import AlbumFooter from './AlbumFooter';
-import AlbumBody from './AlbumBody/BodyOptions';
-import BodyMain from './AlbumBody/BodyMain';
+import { newAlbum, changeTheme, listAlbums } from './reducers/Actions';
+import Pagination from './commonComponents/Pagination';
+import DirectoryTable from './commonComponents/DirectoryTable';
+import axios from "axios";
+import { FLOW_LIST } from './commonComponents/Properties';
+import AlbumMaker from './AlbumMaker';
 
 export default function AlbumMakerClient() {
   const { state, dispatch } = useFlow();
-  const { theme } = state;
+  const { theme, flow } = state;
+  const isAllAlbumSelected=true;
+  const isListFlow = flow === FLOW_LIST; 
 
   const newAlbumHandler = () => {
     dispatch(newAlbum());
   };
-  const changeThemeHandler = () => {
-    dispatch(changeTheme());
+  const allAlbumHandler = () => {
+    dispatch(listAlbums());
+  };
+  const [albums, setAlbums] = useState([]);
+  const initialFormState = {
+    albumId: null,
+    userEmail: "",
+    fecha: null,
+    identificationNumber:"",
+    name: "",
+    telephone: "",
+    city: "",
+    address: "",
+    identificationNumberS: "",
+    nameS: "",
+    telephoneS: "",
+    cityS: "",
+    addressS:"",
+    imageList: [],
+    template: "",
+    estado: "",
+    operador: "",
+    courier: "",
+    motivoCancelacion: ""
+  };
+  const [currentAlbum, setCurrentAlbum] = useState(initialFormState);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [albumsPerPage] = useState(10);
+
+  const editAlbum = (album) => {
+  
   };
 
-  const newAlbumTooltip = (
-    <Tooltip id="newAlbumTooltip">Nuevo Album</Tooltip>
-  );
+  const updateAlbum = (id, updatedAlbum) => {
 
-  const changeThemeTooltip = (
-    <Tooltip id="changeThemeTooltip">Cambiar tema</Tooltip>
-  );
+  };
+
+  const deleteAlbum = (id) => {
+    setAlbums(albums.filter((album) => album.id !== id));
+  };
+
+  useEffect(() => {
+    axios("http://localhost:3000/admin/albums/data")
+      .then((response) =>
+        response.data.map((album) => ({
+          id: album._id,
+          title: album.title,
+          artist: album.artist,
+          genre: album.genre,
+          year: album.year,
+          image: album.image,
+        }))
+      )
+      .then((data) => {
+        setAlbums(data);
+      });
+  }, []);
+
+  const indexOfLastAlbum = currentPage * albumsPerPage;
+  const indexOfFirstAlbum = indexOfLastAlbum - albumsPerPage;
+  const currentAlbums = albums.slice(indexOfFirstAlbum, indexOfLastAlbum);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className={`App ${theme}`}>
-      <header className="d-flex flex-row bg-primary bd-highlight" style={{ height: '10vh' }}>
-        <div className="me-auto p-2 bd-highlight">
-          <p className="logo text-light">Album Maker</p>
-        </div>
-        <ul className="nav flex-row d-flex p-2 bd-highlight 
-        justify-content-end align-items-stretch">
-          <li className="nav-item me-3">
-            <OverlayTrigger placement="bottom" overlay={newAlbumTooltip}>
-              <button className="btn btn-primary btn-focus shadow-none"
-                onClick={newAlbumHandler}>
-                <CreateNewAlbumIcon aria-hidden="true" />
+      <header className="d-flex flex-row bg-black bd-highlight">
+        <ul className="nav flex-row d-flex p-0 bd-highlight 
+        justify-content-start align-items-stretch">
+          <li className="nav-item d-flex align-items-stretch me-3">
+              <button className={`btn btn-dark btn-focus shadow-none ${isListFlow ? 'bg-secondary' : ''}`}
+                onClick={allAlbumHandler}>
+                Mis Albumes
               </button>
-            </OverlayTrigger>
           </li>
           <li className="nav-item me-3">
-            <OverlayTrigger placement="bottom" overlay={changeThemeTooltip}>
-              <button className="btn btn-primary btn-focus shadow-none"
-                onClick={changeThemeHandler}>
-                <ToogleThemeIcon aria-hidden="true" />
+          <button className={`btn btn-dark btn-focus shadow-none ${!isListFlow ? 'bg-secondary' : ''}`}
+                onClick={newAlbumHandler}>
+                Nuevo Album
               </button>
-            </OverlayTrigger>
           </li>
         </ul>
       </header >
+      {!isListFlow?<AlbumMaker/>:(
       <div className="d-flex flex-row " style={{ height: '83vh' }}>
-        Album maker client
+      <DirectoryTable
+        albums={currentAlbums}
+        editAlbum={editAlbum}
+        deleteAlbum={deleteAlbum}
+      />
+      <Pagination
+        albumsPerPage={albumsPerPage}
+        totalAlbums={albums.length}
+        paginate={paginate}
+      />
       </div>
+      )}
     </div >
   );
 }

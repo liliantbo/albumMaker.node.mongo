@@ -57,5 +57,16 @@ router.post('/login', (req, res) => {
     });
 });
 
+router.post('/logout', (req, res) => {
+    console.log('Controllers :: Admin :: Logout :: INICIO')
+    console.log(req.body);
+    const{user}=req.body;
+   
+    console.log('Controllers :: Admin :: Logout :: User:', user)
+    req.session.user = null;    
+    return res.json({ code: 'OK', message: 'Logout successful!'}) 
+    res.render('/', { name: 'Administrator'});
+});
+
 
 module.exports = router;

@@ -23,9 +23,9 @@ export default function Login() {
   const { dispatch } = useFlow();
 
   const [addModal, setAddModal] = useState(false);
-  const toggleShowAddModal = (option) => setAddModal(!addModal);
+  const toggleShowAddModal = () => setAddModal(!addModal);
   const [loginModal, setLoginModal] = useState(false);
-  const toggleShowLoginModal = (option) => setLoginModal(!loginModal);
+  const toggleShowLoginModal = () => setLoginModal(!loginModal);
 
 
   const addUser = (user) => {

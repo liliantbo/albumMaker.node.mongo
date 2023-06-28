@@ -2,7 +2,7 @@ import {
     FLOW_BILLING, FLOW_NEW, FLOW_PROCESED,
     FLOW_PROCESS, FLOW_SAVED, OPTION_ALBUM, OPTION_BILL,
     OPTION_RESUME, TEMPLATE_BIRTHDAY, TEMPLATE_LOVE,
-    THEME_DARK, THEME_LIGHT
+    THEME_DARK, THEME_LIGHT, FLOW_LIST
 } from "../commonComponents/Properties";
 
 export function FlowAndSelectedOptionReducer(state, action) {
@@ -103,6 +103,11 @@ export function FlowAndSelectedOptionReducer(state, action) {
                 ...state,
                 shipping: action.newShipping,
             };
+        case 'listAlbums':
+                return {
+                    ...state,
+                    flow: FLOW_LIST,
+                };
         default:
             return state;
     }

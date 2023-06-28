@@ -56,3 +56,6 @@ export const updateShipping = (shipping) => {
     newShipping: shipping
   }
 }
+export const listAlbums = () => {
+  return { type: 'listAlbums' };
+};
