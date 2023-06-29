@@ -1,15 +1,18 @@
 import { React, useRef} from "react";
 
-import { useFlow } from "../reducers/FlowAndSelectedOptionContext";
-import { albumComplete, updateImageList } from '../reducers/Actions';
+import { useSelector, useDispatch } from 'react-redux';
+import { albumComplete, updateImageList } from '../reducers/albumActions';
 
 import AlbumTemplate from './AlbumTemplate';
 
 export default function AlbumEditor() {
-    const { dispatch, state } = useFlow();
-    const {imageList}=state;
+
+    //redux store
+    const imageList = useSelector(state => state.alb.imageList);
     const hasElements=imageList.some((img)=>img!=null);
 
+     //redux reducer
+    const dispatch = useDispatch();
     const albumCompleteHandler = () => {
         dispatch(albumComplete());
     };

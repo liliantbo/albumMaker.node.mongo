@@ -1,15 +1,18 @@
 import { useState } from "react";
-import { useFlow } from "../reducers/FlowAndSelectedOptionContext";
-import { updateBilling, updateShipping } from '../reducers/Actions';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateBilling, updateShipping } from '../reducers/albumActions';
+
 import provinciasCantones from "../commonComponents/provincias.json"
 
 export default function BillingForm() {
-  const { state, dispatch } = useFlow();
-  const {billing, shipping}=state;
+  //redux store
+  const billing = useSelector(state => state.alb.billing);
+  const shipping = useSelector(state => state.alb.shipping);
   const [isChecked, setIsChecked] = useState(false);
   const provinciasData = provinciasCantones;
   const cantonesKeys = Object.keys(provinciasData[9].cantones);
-
+//redux reducer
+const dispatch = useDispatch();
   function handleChange(evt) {
     const { target } = evt;
     const { id, value } = target;

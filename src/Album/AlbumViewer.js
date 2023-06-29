@@ -1,4 +1,5 @@
-import { useFlow } from "../reducers/FlowAndSelectedOptionContext";
+import React from 'react';
+import { useSelector } from 'react-redux';
 
 import AlbumTemplate from './AlbumTemplate';
 
@@ -6,8 +7,9 @@ import AlbumTemplate from './AlbumTemplate';
 //Este proyecto actualmente consta de solo un template para album
 //y las imagenes se envian a dicho template como children
 export default function AlbumViewer() {
-    const { state } = useFlow()
-    const {imageList}=state;
+    //redux store
+    const imageList = useSelector(state => state.alb.imageList);
+    
     return (
         <div className="d-flex flex-row my-1">
             <AlbumTemplate>

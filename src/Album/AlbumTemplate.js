@@ -1,19 +1,30 @@
 import React from "react";
-import { useFlow } from "../reducers/FlowAndSelectedOptionContext";
+
+import { useSelector, useDispatch } from 'react-redux';
+import { changeToBirthdayTemplate, changeToLoveTemplate } from "../reducers/albumActions";
+import {
+    FLOW_PROCESED, FLOW_SAVED, OPTION_ALBUM,
+    TEMPLATE_BIRTHDAY, TEMPLATE_LOVE
+} from "../commonComponents/Properties";
+
+
 import AlbumTemplateBirthday from './AlbumTemplateBirthday'
 import AlbumTemplateLove from "./AlbumTemplateLove";
-import { FLOW_PROCESED, FLOW_SAVED, OPTION_ALBUM, 
-    TEMPLATE_BIRTHDAY, TEMPLATE_LOVE } from "../commonComponents/Properties";
-import { changeToBirthdayTemplate, changeToLoveTemplate } from "../reducers/Actions";
+
+
 
 export default function AlbumTemplate({ children }) {
-    const { state, dispatch } = useFlow();
-    const { template, flow, selectedOption } = state;
+    //redux store
+    const selectedOption = useSelector(state => state.alb.selectedOption);
+    const flow = useSelector(state => state.alb.flow);
+    const template = useSelector(state => state.alb.template);
     const isBirthdayTemplate = template === TEMPLATE_BIRTHDAY;
     const isLoveTemplate = template === TEMPLATE_LOVE;
     const isProcessedFlow = flow === FLOW_PROCESED || flow === FLOW_SAVED;
     const isAlbumSelected = selectedOption === OPTION_ALBUM;
 
+    //redux reducer
+    const dispatch = useDispatch();
     const changeTemplateHandler = (option) => {
         switch (option) {
             case TEMPLATE_BIRTHDAY:
@@ -36,8 +47,8 @@ export default function AlbumTemplate({ children }) {
                             id="inlineRadio1"
                             value={TEMPLATE_BIRTHDAY}
                             checked={isBirthdayTemplate}
-                            onChange={() => changeTemplateHandler(TEMPLATE_BIRTHDAY)} 
-                            />
+                            onChange={() => changeTemplateHandler(TEMPLATE_BIRTHDAY)}
+                        />
                         <label htmlFor="inlineRadio1">Birthday</label>
                     </div>
                     <div className="me-2">

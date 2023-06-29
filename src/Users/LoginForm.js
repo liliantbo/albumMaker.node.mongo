@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import {  MDBBtn} from 'mdb-react-ui-kit';
-import { useDispatch } from 'react-redux';
-import { login } from '../reducers/authActions';
 
 const LoginForm = (props) => {
-  const dispatch = useDispatch();
-  
   const isRequired=false;
   const initialFormState = {
     id: null,

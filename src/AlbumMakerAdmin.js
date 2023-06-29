@@ -5,22 +5,17 @@ import './App.css';
 
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
-import { useFlow } from './reducers/FlowAndSelectedOptionContext';
-import { newAlbum, changeTheme } from './reducers/Actions';
-
-import AlbumFooter from './AlbumFooter';
-import AlbumBody from './AlbumBody/BodyOptions';
-import BodyMain from './AlbumBody/BodyMain';
+import { useSelector } from 'react-redux';
 
 export default function AlbumMakerAdmin() {
-  const { state, dispatch } = useFlow();
-  const { theme } = state;
+  //redux store
+  const theme = useSelector(state => state.alb.theme);
+
+  //redux reducer
 
   const newAlbumHandler = () => {
-    dispatch(newAlbum());
   };
   const changeThemeHandler = () => {
-    dispatch(changeTheme());
   };
 
   const newAlbumTooltip = (

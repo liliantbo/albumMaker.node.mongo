@@ -1,28 +1,29 @@
 import React from 'react';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { goToAlbum, goToBill, goToResume } from '../reducers/albumActions';
+import { OPTION_ALBUM, OPTION_BILL, OPTION_RESUME } from '../commonComponents/Properties'
+
 import { ReactComponent as AlbumIcon } from './change-record-type.svg'
 import { ReactComponent as BillIcon } from './identity.svg'
 import { ReactComponent as ResumeIcon } from './finished.svg'
 
-import { useFlow } from '../reducers/FlowAndSelectedOptionContext';
-import { goToAlbum, goToBill, goToResume } from '../reducers/Actions';
-import { OPTION_ALBUM, OPTION_BILL, OPTION_RESUME } from '../commonComponents/Properties'
-
 export default function SideBar({ children }) {
 
-  const { state, dispatch } = useFlow();
-  const { selectedOption } = state;
+  //redux store
+  const selectedOption = useSelector(state => state.alb.selectedOption);
   const isAlbumSelected = selectedOption === OPTION_ALBUM;
   const isBillSelected = selectedOption === OPTION_BILL;
   const isResumeSelected = selectedOption === OPTION_RESUME;
 
+  //redux reducer
+  const dispatch = useDispatch();
   const goToAlbumHandler = () => {
     dispatch(goToAlbum());
   };
-
   const goToBillHandler = () => {
     dispatch(goToBill());
   };
-
   const goToResumeHandler = () => {
     dispatch(goToResume());
   };

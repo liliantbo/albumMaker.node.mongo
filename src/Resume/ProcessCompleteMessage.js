@@ -1,11 +1,11 @@
 import React from 'react';
-import { useFlow } from '../reducers/FlowAndSelectedOptionContext';
+import { useSelector } from 'react-redux';
 import { FLOW_SAVED, MESSAGE_PROCESSED, MESSAGE_SAVED } from '../commonComponents/Properties';
 
 
 export default function ProcessSuccess () {
-  const {state}=useFlow();
-  const {flow}=state;
+  //redux store
+  const flow = useSelector(state => state.alb.flow);
   const isProcessedAndSaved=flow===FLOW_SAVED;
   return (
     <div className="alert alert-success d-flex flex-column justify-content-center m-2" role="alert">

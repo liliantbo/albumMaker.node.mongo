@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import { useDispatch } from 'react-redux';
 import { login } from '../reducers/authActions';
 import { Alert } from 'react-bootstrap';
@@ -7,20 +8,16 @@ import DemoImage from '../AlbumMakerDemo.gif'
 import Modal from '../commonComponents/Modal'
 import AddUserForm from './AddUserForm';
 import LoginForm from './LoginForm'
-import { Tooltip } from 'react-bootstrap';
 import axios from "axios";
 import '../App.css';
-
-import { useFlow } from '../reducers/FlowAndSelectedOptionContext';
-import { newAlbum, changeTheme } from '../reducers/Actions';
 
 export default function Login() {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
-  const dispatch1 = useDispatch();
-  const [users, setUsers] = useState([]);
 
-  const { dispatch } = useFlow();
+  //redux reducer
+  const dispatch = useDispatch();
+  const [users, setUsers] = useState([]);
 
   const [addModal, setAddModal] = useState(false);
   const toggleShowAddModal = () => setAddModal(!addModal);
@@ -47,29 +44,13 @@ export default function Login() {
     axios
       .post("http://localhost:3000/users/login", { user })
       .then((response) => {
-        dispatch1(login(response.data));
+        dispatch(login(response.data));
         console.log('Data:', response.data)
       }).catch((error) => {
         console.error('Error:', error);
         setError("Usuario o password incorrectos");
       });
   };
-
-
-  const newAlbumHandler = () => {
-    dispatch(newAlbum());
-  };
-  const changeThemeHandler = () => {
-    dispatch(changeTheme());
-  };
-
-  const newAlbumTooltip = (
-    <Tooltip id="newAlbumTooltip">Ingresar</Tooltip>
-  );
-
-  const changeThemeTooltip = (
-    <Tooltip id="changeThemeTooltip">Cambiar tema</Tooltip>
-  );
 
   return (
       <main className="d-flex flex-column ">
@@ -91,8 +72,6 @@ export default function Login() {
 
         />
         </div>
-
-
 
         <div>
           <img src={DemoImage} alt="Animated GIF" />

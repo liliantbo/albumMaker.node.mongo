@@ -9,4 +9,7 @@ export const login = (user) => {
       type: 'LOGOUT'
     };
   };
+  export const changeTheme = () => {
+    return { type: 'changeTheme' };
+  };
   

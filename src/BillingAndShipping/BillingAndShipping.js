@@ -1,14 +1,17 @@
-import { useFlow } from "../reducers/FlowAndSelectedOptionContext";
-import { billingComplete } from '../reducers/Actions';
-
-import BillingAndShippingForm from './BillingForm';
+import { useSelector, useDispatch } from 'react-redux';
+import { billingComplete } from '../reducers/albumActions';
 import { FLOW_BILLING } from "../commonComponents/Properties";
 
+import BillingAndShippingForm from './BillingForm';
+
+
 export default function BillingAndShipping() {
-  const { state, dispatch } = useFlow();
-  const {flow}=state;
+  //redux store
+  const flow = useSelector(state => state.alb.flow);
   const isBillingFlow=flow===FLOW_BILLING;
 
+  //redux reducer
+  const dispatch = useDispatch();
   const handleSubmit = (e) => {
     dispatch(billingComplete());
   };

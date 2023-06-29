@@ -1,41 +1,51 @@
 import React, {useState} from 'react';
-import { useSelector } from 'react-redux';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
-import Login from './Users/Login';
-
-import Modal from './commonComponents/Modal'
-import LoginForm from './Users/LoginForm'
-import { useDispatch } from 'react-redux';
-import { login, logout } from './reducers/authActions';
 import axios from "axios";
-import { Alert } from 'react-bootstrap';
+import { Alert, OverlayTrigger, Tooltip  } from 'react-bootstrap';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { login, logout, changeTheme } from './reducers/authActions';
+import { ROL_USER } from './commonComponents/Properties';
+
+import Login from './Users/Login';
+import LoginForm from './Users/LoginForm'
+import AlbumMakerClient from './AlbumMakerClient';
+import AlbumMakerAdmin from './AlbumMakerAdmin';
+import Modal from './commonComponents/Modal'
 
 import { ReactComponent as LoginIcon } from './Users/user1.svg';
 import { ReactComponent as ToogleThemeIcon } from './Users/theme-light-dark.svg';
 import {ReactComponent as LogoutIcon } from './Users/sign-out.svg'
 
-import './App.css';
-
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { useFlow } from './reducers/FlowAndSelectedOptionContext';
-import { newAlbum, changeTheme } from './reducers/Actions';
-
-import AlbumFooter from './AlbumFooter';
-import AlbumMakerClient from './AlbumMakerClient';
-import AlbumMakerAdmin from './AlbumMakerAdmin';
-import { ROL_USER } from './commonComponents/Properties';
-
 export default function Landing() {
+
+  //redux store
+  const loggedIn = useSelector(state => state.auth.loggedIn);
+  const user =  useSelector(state => state.auth.user);
+  const theme =  useSelector(state => state.auth.theme);
+  const { rol } = user
+  const isUser = rol === ROL_USER;
+
+  console.log("selector state.auth.loggedIn ", loggedIn);
+  console.log("selector state.auth.user ", rol);
+
+  //redux reducer
+  const dispatch = useDispatch();
+  const changeThemeHandler = () => {
+    dispatch(changeTheme());
+  };
+
+  //alert
+  const [error, setError] = useState(null);
+
+  //modal
   const [loginModal, setLoginModal] = useState(false);
   const toggleShowLoginModal = () => setLoginModal(!loginModal);
-  const [error, setError] = useState(null);
-  const dispatch1 = useDispatch();
   const loginUser = (user) => {
     toggleShowLoginModal();
     axios
       .post("http://localhost:3000/users/login", { user })
       .then((response) => {
-        dispatch1(login(response.data));
+        dispatch(login(response.data));
         console.log('Data:', response.data)
         setError(null);
       }).catch((error) => {
@@ -47,28 +57,13 @@ export default function Landing() {
     axios
       .post("http://localhost:3000/users/logout", { user })
       .then((response) => {
-        dispatch1(logout());
+        dispatch(logout());
         console.log('Data:', response.data)
         setError(null);
       });
   };
-  const loggedIn = useSelector(state => state.auth.loggedIn);
-  const user =  useSelector(state => state.auth.user);
-  const { rol } = user
-  console.log("selector state.auth.loggedIn ", loggedIn);
-  console.log("selector state.auth.user ", rol);
-  const isUser = rol === ROL_USER;
 
-  const { state, dispatch } = useFlow();
-  const { theme } = state;
-
-  const newAlbumHandler = () => {
-    dispatch(newAlbum());
-  };
-  const changeThemeHandler = () => {
-    dispatch(changeTheme());
-  };
-
+  //Botones Header
   const loginTooltip = (
     <Tooltip id="loginTooltip">Ingresar</Tooltip>
   );
@@ -80,6 +75,7 @@ export default function Landing() {
     <Tooltip id="changeThemeTooltip">Cambiar tema</Tooltip>
   );
 
+  //render en base a si hizo login y que rol tiene el usuario
   const renderContent = () => {
     switch (loggedIn) {
       case false:
@@ -90,6 +86,7 @@ export default function Landing() {
         return null;
     }
   };
+  
   return (
     <div className={`App ${theme}`}>
 

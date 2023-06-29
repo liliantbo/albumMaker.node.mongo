@@ -1,6 +1,5 @@
 import React from 'react';
-
-import { useFlow } from '../reducers/FlowAndSelectedOptionContext';
+import { useSelector } from 'react-redux';
 import {
     OPTION_ALBUM, OPTION_BILL,
     OPTION_RESUME, OPTION_CREATE,
@@ -24,8 +23,9 @@ import OrderResume from '../Resume/OrderResume';
 
 export default function Main() {
 
-    const { state } = useFlow();
-    const { selectedOption, flow} = state;
+    //redux store
+    const selectedOption = useSelector(state => state.alb.selectedOption);
+    const flow = useSelector(state => state.alb.flow);
     const isProcessedFlow = flow === FLOW_PROCESED || flow === FLOW_SAVED;
 
     //renderizar de acuerdo al estado del flujo 

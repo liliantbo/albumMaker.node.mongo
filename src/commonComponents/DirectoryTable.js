@@ -113,6 +113,7 @@ const DirectoryTable = (props) => {
             {updateAlbums.length > 0 ? (
               updateAlbums.map((album) => (
                 <tr key={album.id}>
+                  <td>{album.fecha}</td>
                   <td>{album.albumId}</td>
                   <td>{album.name}</td>
                   <td>{album.addressS}</td>
