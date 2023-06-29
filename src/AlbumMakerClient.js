@@ -63,6 +63,7 @@ export default function AlbumMakerClient() {
             id: album._id,
             imageList: [null, null, null, null, null, null],
             imageUrlList: album.imageUrlList,
+            template: album.template,
             estado: album.estado,
             userEmail: album.userEmail,
             fecha: album.fecha,

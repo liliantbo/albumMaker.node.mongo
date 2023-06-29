@@ -10,9 +10,8 @@ export const goToResume = () => {
   return { type: 'goToResume' };
 };
 
-export const albumComplete = (userEmail) => {
-  return { type: 'albumComplete',
-            payload: {userEmail} };
+export const albumComplete = () => {
+  return { type: 'albumComplete' };
 };
 
 export const billingComplete = () => {
@@ -60,4 +59,8 @@ export const updateShipping = (shipping) => {
 }
 export const listAlbums = () => {
   return { type: 'listAlbums' };
+};
+export const editAlbum = (selectedAlbum) => {
+  return { type: 'editAlbum', 
+          newAlbum: selectedAlbum };
 };

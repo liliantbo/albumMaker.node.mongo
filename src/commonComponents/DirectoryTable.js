@@ -1,11 +1,69 @@
-import React, { useState, useMemo } from "react";
+import React from "react";
+
+import { useDispatch } from 'react-redux';
+import { editAlbum } from '../reducers/albumActions';
+
+import { ReactComponent as EditIcon } from './image-edit-outline.svg';
+import { STATE_SENDED } from "./Properties";
+
+function convertImageList(imageUrlList) {
+  const nuevaLista = [];
+
+  const convertImage = (imageUrl, index) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      const file = new File([imageUrl], `image_${index}`);
+
+      fileReader.onload = () => {
+        nuevaLista[index] = { file, item: fileReader.result };
+        resolve();
+      };
+
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+
+      fileReader.readAsDataURL(file);
+    });
+  };
+
+  const conversionPromises = imageUrlList.map((imageUrl, index) => {
+    return convertImage(imageUrl, index);
+  });
+
+  return Promise.all(conversionPromises)
+    .then(() => nuevaLista)
+    .catch((error) => {
+      console.error('Error al convertir las imagenes:', error);
+      return [];
+    });
+}
 
 const DirectoryTable = (props) => {
+  //redux reducer
+  const dispatch = useDispatch();
+  const editAlbumHandler = (selectedAlbum) => {
+    convertImageList(selectedAlbum.imageUrlList)
+      .then((nuevaLista) => {
+        console.log("La nueva lista es: ", nuevaLista);
+        const newAlbum={
+          ...selectedAlbum,
+          imageList:nuevaLista
+        }
+        dispatch(editAlbum(newAlbum));
+      })
+      .catch((error) => {
+        console.error('Error al convertir las imágenes:', error);
+      });
+  };
+  
+  
+
   const updateAlbums = props.albums;
 
   return (
     <div className="container">
-      
+
       <table className="table mt-3">
         <thead className="table-dark">
           <tr>
@@ -16,6 +74,7 @@ const DirectoryTable = (props) => {
             <th scope="col">Estado</th>
             <th scope="col">Courier</th>
             <th scope="col">Motivo Cancelación</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -29,6 +88,15 @@ const DirectoryTable = (props) => {
                 <td>{album.estado}</td>
                 <td>{album.courier}</td>
                 <td>{album.motivoCancelacion}</td>
+                <td>
+                  {album.estado === STATE_SENDED &&
+                      <EditIcon className="icon" 
+                      aria-hidden="true"  
+                      onClick={()=>editAlbumHandler(album)}/>
+                    
+                }
+
+                </td>
               </tr>
             ))
           ) : (

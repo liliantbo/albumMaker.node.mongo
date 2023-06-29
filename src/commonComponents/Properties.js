@@ -4,7 +4,7 @@ export const ROL_OPERATOR="OPERADOR";
 export const ROL_ADMIN="ADMIN";
 
 //constantes de estados del album
-export const STATE_SENDED="ENVIADO";
+export const STATE_SENDED="ENVIADA";
 
 //valores que puede tomar el estado flow
 export const FLOW_LIST = 'list';

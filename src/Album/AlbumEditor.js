@@ -40,7 +40,8 @@ export default function AlbumEditor() {
             dragOverItem.current !== undefined && dragOverItem.current !== null) {
             const itemArrastrado = nuevaLista[dragItem.current];
             nuevaLista[dragItem.current] = nuevaLista[dragOverItem.current];
-            nuevaLista[dragOverItem.current] = itemArrastrado
+            nuevaLista[dragOverItem.current] = itemArrastrado;
+            console.log("AlbumEditor :: Drop :: nuevaLista:". nuevaLista);
             setImageList(nuevaLista);
         } else {
             const file = e.dataTransfer.files[0];
@@ -67,6 +68,7 @@ export default function AlbumEditor() {
                 {
                     imageList.map((file, index) => {
                         const item=file?file.item:null;
+                        console.log("AlbumEditor :: Recorriendo imageList :: item: ",item);
                         return (
                             <div
                                 className="d-flex align-items-center justify-content-center 

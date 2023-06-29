@@ -41,6 +41,7 @@ const initialState = {
 };
 
 export function albumReducer(state = initialState, action) {
+    console.log("AlbumReducer :: Action :: Type: ", action.type);
     switch (action.type) {
         case 'goToAlbum':
             return {
@@ -122,6 +123,12 @@ export function albumReducer(state = initialState, action) {
                 ...state,
                 flow: FLOW_LIST,
             };
+        case 'editAlbum':
+                return {
+                    ...action.newAlbum,
+                    flow: FLOW_NEW,
+                    selectedOption: OPTION_ALBUM,
+                };
         default:
             return state;
     }
