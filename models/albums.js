@@ -56,6 +56,6 @@ const deleteAlbumById = (albumId) => {
 exports.createAlbum = createAlbum;
 exports.getAlbumById = getAlbumById;
 exports.getAllAlbums = getAllAlbums;
-exports.getAlbumsByUser = getAlbumsByUser;
+exports.getAlbumsByUserEmail = getAlbumsByUserEmail;
 exports.updateAlbumById = updateAlbumById;
 exports.deleteAlbumById = deleteAlbumById;

@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Albums = require('../models/albums');
-const Album = require('../../schemas/albums');
-
+const Albums = require('../../models/albums');
 
 router.get('/', (req, res) => {
     const { email } = req.session.user;
@@ -16,35 +14,12 @@ router.get('/', (req, res) => {
 });
 
 
-router.post('/', function (req, res) {
-    const { album } = req.body;
-    console.log('Controllers :: Client :: PostAlbum :: Data:', album);
+router.post('/album', function (req, res) {
+    const newAlbum  = req.body;
 
-    const { billing, shipping, imageList, template } = album;
-    const currentDate = format(new Date(), 'yyyyMMddHHmmss');
+    console.log('Controllers :: Client :: PostAlbum :: Data:', newAlbum);
 
-    const imageUrlList = imageList.filter((e) => e != null);
-
-    const uploadPromises = imageUrlList.map((element) => {
-        return uploadToS3(element.file, element.fileName)
-            .then((uploadedUrl) => {
-                return { S: uploadedUrl };
-            })
-            .catch((error) => {
-                throw error;
-            });
-    });
-
-    return Promise.all(uploadPromises)
-        .then((uploadedResults) => {
-            const uploadedUrls = uploadedResults.filter((result) => result !== null);
-
-            if (uploadedUrls.length === 0) {
-                return res.status(500).json({ code: 'UE', message: 'No se pudo cargar ninguna imagen en S3' });
-            }
-            album.imageUrlList = uploadedUrls;
-            
-            return Albums.createAlbum(album, (error, b) => {
+            return Albums.createAlbum(newAlbum, (error, b) => {
                 if (error) {
                     console.log('Controllers :: Client :: PostAlbum :: Resultado: Error')
                     return res.status(500).json({ code: 'UE', message: 'Unkwown error' })
@@ -52,13 +27,6 @@ router.post('/', function (req, res) {
                 console.log('Controllers :: Client :: PostAlbum :: Resultado: Saved successfully!')
                 res.json({ code: 'OK', message: 'Saved successfully!', data: b.toJSON() })
             });
-
-        })
-        .catch((error) => {
-            console.log('Error:', error);
-            return res.status(500).json({ code: 'UE', message: 'Unkwown error' })
-        });
-
 
 });
 

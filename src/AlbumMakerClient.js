@@ -12,13 +12,14 @@ import DirectoryTable from './commonComponents/DirectoryTable';
 export default function AlbumMakerClient() {
   
   //redux store
+  const email = useSelector(state => state.auth.user.email);
   const flow = useSelector(state => state.alb.flow);
   const isListFlow = flow === FLOW_LIST; 
 
   //redux reducer
   const dispatch = useDispatch();
   const newAlbumHandler = () => {
-    dispatch(newAlbum());
+    dispatch(newAlbum(email));
   };
   const allAlbumHandler = () => {
     dispatch(listAlbums());

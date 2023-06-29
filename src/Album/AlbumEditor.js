@@ -9,12 +9,13 @@ export default function AlbumEditor() {
 
     //redux store
     const imageList = useSelector(state => state.alb.imageList);
+    const user =  useSelector(state => state.auth.user);
     const hasElements=imageList.some((img)=>img!=null);
 
      //redux reducer
     const dispatch = useDispatch();
     const albumCompleteHandler = () => {
-        dispatch(albumComplete());
+        dispatch(albumComplete(user));
     };
     const setImageList = (list) => {
         dispatch(updateImageList(list));

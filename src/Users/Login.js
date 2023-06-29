@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from "axios";
 
 import { useDispatch } from 'react-redux';
 import { login } from '../reducers/authActions';
@@ -8,8 +9,6 @@ import DemoImage from '../AlbumMakerDemo.gif'
 import Modal from '../commonComponents/Modal'
 import AddUserForm from './AddUserForm';
 import LoginForm from './LoginForm'
-import axios from "axios";
-import '../App.css';
 
 export default function Login() {
   const [error, setError] = useState(null);

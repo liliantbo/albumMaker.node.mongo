@@ -3,6 +3,9 @@ export const ROL_USER="USUARIO";
 export const ROL_OPERATOR="OPERADOR";
 export const ROL_ADMIN="ADMIN";
 
+//constantes de estados del album
+export const STATE_SENDED="ENVIADO";
+
 //valores que puede tomar el estado flow
 export const FLOW_LIST = 'list';
 export const FLOW_NEW = 'new';

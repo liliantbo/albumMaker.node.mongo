@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
-const albumSchema = new mongoose.Schema({
-  albumId: String,
+const albums = new mongoose.Schema({
   userEmail: String,
   fecha: Date,
   identificationNumber: String,
@@ -14,7 +13,7 @@ const albumSchema = new mongoose.Schema({
   telephoneS: String,
   cityS: String,
   addressS: String,
-  imageList: { type: [String], required: true },
+  imageUrlList: { type: [String] },
   template: String,
   estado: String,
   operador: String,
