@@ -3,12 +3,14 @@ const router = express.Router();
 const Albums = require('../../models/albums');
 
 router.get('/', (req, res) => {
-    const { email } = req.session.user;
-
+    //const { email } = req.session.user;
+    const email = "liliantbo@gmail.com"
+    console.log('Controllers :: Client :: getAlbums :: email:', email);
     return Albums.getAlbumsByUserEmail(email, (error, elems) => {
         if (error) {
             return res.status(500).json({ code: 'UE', message: 'Unknown error' })
         }
+        console.log('Controllers :: Client :: getAlbums :: response:', elems);
         res.json(elems);
     });
 });

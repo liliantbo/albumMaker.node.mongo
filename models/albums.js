@@ -19,21 +19,28 @@ const getAlbumById = (albumId) => {
     });
 };
 
-const getAllAlbums = () => {
-  return Albums.find()
-    .then(albums => albums)
-    .catch(() => {
-      throw new Error('Error retrieving albums');
-    });
+const getAllAlbums = (cb) => {
+     Albums.find({})
+    .then((elems) => {
+        return cb(null, elems);
+    })
+    .catch((error) => {
+        console.log('Error retrieving albums', error);
+        return cb(error);
+    })
 };
 
-const getAlbumsByUserEmail = (userEmail) => {
-  return Albums.find({ userEmail })
-    .then(albums => albums)
-    .catch(() => {
-      throw new Error('Error retrieving user albums');
-    });
-};
+function getAlbumsByUserEmail(emailValue, cb) {
+  Albums.find({ userEmail: emailValue})
+  .then((elems) => {
+    return cb(null, elems);
+  })
+  .catch((error) => {
+      console.log('Error retrieving user albums', error);
+      return cb(error);
+  })
+}
+
 
 // UPDATE
 const updateAlbumById = (albumId, updateData) => {

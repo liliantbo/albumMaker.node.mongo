@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from "axios";
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -10,11 +10,11 @@ import Pagination from './commonComponents/Pagination';
 import DirectoryTable from './commonComponents/DirectoryTable';
 
 export default function AlbumMakerClient() {
-  
+
   //redux store
   const email = useSelector(state => state.auth.user.email);
   const flow = useSelector(state => state.alb.flow);
-  const isListFlow = flow === FLOW_LIST; 
+  const isListFlow = flow === FLOW_LIST;
 
   //redux reducer
   const dispatch = useDispatch();
@@ -28,28 +28,57 @@ export default function AlbumMakerClient() {
   const [albums, setAlbums] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [albumsPerPage] = useState(10);
-  const editAlbum = (album) => {  
+  const editAlbum = (album) => {
+    return null;
   };
   const deleteAlbum = (id) => {
     setAlbums(albums.filter((album) => album.id !== id));
   };
 
   useEffect(() => {
-    axios("http://localhost:3000/admin/albums/data")
-      .then((response) =>
-        response.data.map((album) => ({
-          fecha: album.fecha,
-          albumId: album._id,
-          name: album.name,
-          addressS: album.addressS,
-          estado: album.estado,
-          courier: album.courier
-        }))
-      )
-      .then((data) => {
+    axios.get("http://localhost:3000/clients")
+      .then((response) => {
+        console.log("ALbumMakerClient :: useEffect :: response: ", response);
+        const data = response.data.map((album) => {
+          return {
+            billing: {
+              name: album.name,
+              lastName: album.lastName,
+              identificationNumber: album.identificationNumber,
+              telephone: album.telephone,
+              province: album.province,
+              city: album.city,
+              address: album.address
+            },
+            shipping: {
+              copyFromBilling: false,
+              name: album.nameS,
+              lastName: album.lastNameS,
+              identificationNumber: album.identificationNumberS,
+              telephone: album.telephoneS,
+              province: album.provinceS,
+              city: album.cityS,
+              address: album.addressS
+            },
+            id: album._id,
+            imageList: [null, null, null, null, null, null],
+            imageUrlList: album.imageUrlList,
+            estado: album.estado,
+            userEmail: album.userEmail,
+            fecha: album.fecha,
+            operador: album.operador,
+            courier: album.courier,
+            motivoCancelacion: album.motivoCancelacion
+          };
+        });
+        console.log("ALbumMakerClient :: useEffect :: data: ", data);
         setAlbums(data);
+      })
+      .catch((error) => {
+        console.error("ALbumMakerClient :: useEffect :: error: ", error);
       });
   }, []);
+  
 
   const indexOfLastAlbum = currentPage * albumsPerPage;
   const indexOfFirstAlbum = indexOfLastAlbum - albumsPerPage;
@@ -63,32 +92,28 @@ export default function AlbumMakerClient() {
         <ul className="nav flex-row d-flex p-0 bd-highlight 
         justify-content-start align-items-stretch">
           <li className="nav-item d-flex align-items-stretch me-3">
-              <button className={`btn btn-dark btn-focus shadow-none ${isListFlow ? 'bg-secondary' : ''}`}
-                onClick={allAlbumHandler}>
-                Mis Albumes
-              </button>
+            <button className={`btn btn-dark btn-focus shadow-none ${isListFlow ? 'bg-secondary' : ''}`}
+              onClick={allAlbumHandler}>
+              Mis Albumes
+            </button>
           </li>
           <li className="nav-item me-3">
-          <button className={`btn btn-dark btn-focus shadow-none ${!isListFlow ? 'bg-secondary' : ''}`}
-                onClick={newAlbumHandler}>
-                Nuevo Album
-              </button>
+            <button className={`btn btn-dark btn-focus shadow-none ${!isListFlow ? 'bg-secondary' : ''}`}
+              onClick={newAlbumHandler}>
+              Nuevo Album
+            </button>
           </li>
         </ul>
       </header >
-      {!isListFlow?<AlbumMakerCreator/>:(
-      <div className="d-flex flex-row " style={{ height: '83vh' }}>
-      <DirectoryTable
-        albums={currentAlbums}
-        editAlbum={editAlbum}
-        deleteAlbum={deleteAlbum}
-      />
-      <Pagination
-        albumsPerPage={albumsPerPage}
-        totalAlbums={albums.length}
-        paginate={paginate}
-      />
-      </div>
+      {!isListFlow ? <AlbumMakerCreator /> : (
+        <div className="d-flex flex-row " style={{ height: '83vh' }}>
+          <DirectoryTable
+            albums={currentAlbums}
+            editAlbum={editAlbum}
+            deleteAlbum={deleteAlbum}
+          />
+          
+        </div>
       )}
     </div >
   );

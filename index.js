@@ -15,7 +15,8 @@ const path = require('path');
 
 const port = 3000;
 const AdminUsers = require('./controllers/admin/users')
-const ClientUsers = require('./controllers/client/albums')
+const AdminAlbums = require('./controllers/admin/albums')
+const ClientAlbums = require('./controllers/client/albums')
 
 app.use(bodyParser.json({ type: 'application/json' }))
 
@@ -24,7 +25,8 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 app.use('/users', AdminUsers)
-app.use('/clients', ClientUsers)
+app.use('/admins', AdminAlbums)
+app.use('/clients', ClientAlbums)
 
 app.use(express.static(path.join(__dirname, "build")));
 

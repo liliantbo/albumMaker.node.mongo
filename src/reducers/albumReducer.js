@@ -2,13 +2,13 @@ import {
     FLOW_BILLING, FLOW_NEW, FLOW_PROCESED,
     FLOW_PROCESS, FLOW_SAVED, OPTION_ALBUM, OPTION_BILL,
     OPTION_RESUME, TEMPLATE_BIRTHDAY, TEMPLATE_LOVE,
-    THEME_DARK, THEME_LIGHT, FLOW_LIST, STATE_SENDED
+    FLOW_LIST, STATE_SENDED
 } from "../commonComponents/Properties";
 
 const initialState = {
     flow: FLOW_LIST,
     selectedOption: OPTION_ALBUM,
-    theme: THEME_LIGHT,
+   
     template: TEMPLATE_BIRTHDAY,
     billing: {
         "name": '',
@@ -32,6 +32,7 @@ const initialState = {
     imageList: [null, null, null, null, null, null],
     imageUrlList: null,
     estado: STATE_SENDED,
+    id:'',
     userEmail: '',
     fecha: null,
     operador: '',
@@ -90,12 +91,6 @@ export function albumReducer(state = initialState, action) {
                 imageList: [null, null, null, null, null, null],
                 template: TEMPLATE_BIRTHDAY,
                 estado: STATE_SENDED,
-            };
-        case 'changeTheme':
-            const newTheme = state.theme === THEME_LIGHT ? THEME_DARK : THEME_LIGHT;
-            return {
-                ...state,
-                theme: newTheme,
             };
         case 'birthdayTemplate':
             return {
