@@ -12,7 +12,7 @@ function convertImageList(imageUrlList) {
   const convertImage = (imageUrl, index) => {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
-      const file = new File([imageUrl], `image_${index}`);
+      const file = new File([imageUrl], `image_${index}`, { type: 'image/*' });
 
       fileReader.onload = () => {
         nuevaLista[index] = { file, item: fileReader.result };

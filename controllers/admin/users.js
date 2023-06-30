@@ -58,15 +58,22 @@ router.post('/login', (req, res) => {
 });
 
 router.post('/logout', (req, res) => {
-    console.log('Controllers :: Admin :: Logout :: INICIO')
+    console.log('Controllers :: Admin :: Logout :: INICIO');
     console.log(req.body);
-    const{user}=req.body;
-   
-    console.log('Controllers :: Admin :: Logout :: User:', user)
-    req.session.user = null;    
-    return res.json({ code: 'OK', message: 'Logout successful!'}) 
-    res.render('/', { name: 'Administrator'});
-});
+    const { user } = req.body;
+    
+    console.log('Controllers :: Admin :: Logout :: User:', user);
+    req.session.destroy((err) => {
+      if (err) {
+        console.error('Error al destruir la sesión:', err);
+        return res.status(500).json({ code: 'ERROR', message: 'Failed to logout!' });
+      }
+      console.log('Controllers :: Admin :: Logout :: Exito:'); 
+      return res.status(200).json({ code: 'OK', message: 'Success to logout!' });
+      //res.redirect('http://localhost:3000/');    
+    });
+  });
+  
 
 
 module.exports = router;

@@ -1,25 +1,18 @@
 const Albums = require('../schemas/albums');
 
-// CREATE
-const createAlbum = (albumData) => {
-  const album = new Albums(albumData);
-  return album.save()
-    .then(createdAlbum => createdAlbum)
-    .catch(() => {
-      throw new Error('Error creating album');
-    });
-};
+function createAlbum(albumData, cb) {
+  new Albums(albumData)
+  .save()
+  .then((elem) => {
+      return cb(null, elem);
+  })
+  .catch((error) => {
+      console.log('Error creating album:', error);
+      return cb(error);
+  });
+}
 
-// READ
-const getAlbumById = (albumId) => {
-  return Albums.findById(albumId)
-    .then(album => album)
-    .catch(() => {
-      throw new Error('Error retrieving album');
-    });
-};
-
-const getAllAlbums = (cb) => {
+function getAllAlbums(cb){
      Albums.find({})
     .then((elems) => {
         return cb(null, elems);
@@ -61,7 +54,6 @@ const deleteAlbumById = (albumId) => {
 };
 
 exports.createAlbum = createAlbum;
-exports.getAlbumById = getAlbumById;
 exports.getAllAlbums = getAllAlbums;
 exports.getAlbumsByUserEmail = getAlbumsByUserEmail;
 exports.updateAlbumById = updateAlbumById;

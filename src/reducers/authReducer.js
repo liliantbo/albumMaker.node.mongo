@@ -1,9 +1,6 @@
-import { THEME_DARK, THEME_LIGHT } from "../commonComponents/Properties";
-
 const initialState = {
   loggedIn: false,
-  theme: THEME_LIGHT,
-  user: {
+  user:  {
     id: null,
     first_name: "",
     last_name: "",
@@ -11,7 +8,7 @@ const initialState = {
     password: "",
     email: "",
     image: "",
-    rol: ""
+    rol:""
   }
 };
 
@@ -23,16 +20,7 @@ const authReducer = (state = initialState, action) => {
         user: action.payload.user
       };
     case 'LOGOUT':
-      return {
-        loggedIn: false,
-        user: null
-      };
-    case 'changeTheme':
-      const newTheme = state.theme === THEME_LIGHT ? THEME_DARK : THEME_LIGHT;
-      return {
-        ...state,
-        theme: newTheme,
-      };
+      return initialState
     default:
       return state;
   }

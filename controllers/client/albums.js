@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 
 
 router.post('/album', function (req, res) {
-    const newAlbum  = req.body;
+    const {newAlbum}  = req.body;
 
     console.log('Controllers :: Client :: PostAlbum :: Data:', newAlbum);
 

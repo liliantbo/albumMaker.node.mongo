@@ -1,30 +1,20 @@
 import AWS from 'aws-sdk';
-import { format } from 'date-fns';
 
 export default async function SaveToS3(imageList) {
 
         let s3=null;
         let dynamo =null;
         AWS.config.update({
-            accessKeyId: 'ASIATIFAYCUFWG4YMQMJ',
-            secretAccessKey: 'lYvCQ7ms979Zj6f0W4NPeQPRABxWcofKuH5vJnwl',
+            accessKeyId: 'ASIATIFAYCUFUUZN7CMQ',
+            secretAccessKey: 'AMmgMltZ4SjMQ8G7LOD9o4jRaHD07AVW35GWvyFj',
             region: 'us-east-1',
-            sessionToken: 'FwoGZXIvYXdzEC4aDP1vzHVhmxkvTQmUGCLBAZxPaMoVu+mibAZggm2XMGM+7Y+bTpuuq48WpucU8xpySNU/NTVPO6blhtUnC9+LAwyYbZ6YunUKByAHR/J9JfynP0J6ppgtbzNKpbSFbROpVWKioVoZ/Cz2llE5sgXfPtWm8ciR/hrWQcfNgJGAY5brVK5ojB4tIbbjI+MMjEFRCLwxF9AqZib3uOWM9m5QE4u6hSiKyg83NXdm4OdXTqc+4sdZ4+qPLyn4lmB3PBj8gZ3osi/JoiV8K+MlcLEFB9komJb0pAYyLRMW1xvjwDznwLjhvu2+skT0URLjBLVhKA4+V9pnR3xJDhOV7V/4XVeikVH0SA=='
+            sessionToken: 'FwoGZXIvYXdzEEYaDA+CTpPan70efWtK4CLBAS0q+rr6PkUGAUi9sg5tZrQztwGE45c1mGcez9snXarzjAZRCKCrFD9z7xeZvcnGjv9EkH9abA71CrWCXhyaZYbKuXx1vUbvho2a/XG0Di8G9Q/B4VYSSRBX8IQ1vWbeY9Ds/C8fyqpWuXHLdPqbctbfidu6alUfAsCK/gU1WQ7slXDg+rUn6WY9NdGofmUzM2/SuKV/a9i8aQdq8eSEoZ5ag8doRHFG0l2DAHYeds494OznokcSdXz9WVCQybr3bsco9qn5pAYyLZKqea88LtRu3ihklYcYJnn/VN8MlKHqZBfzbUAKhxvi2HSF+6fDZ/pAQcMIOw=='
         });
         try {
             s3 = new AWS.S3();
         } catch (error) {
             console.log("SaveHandler :: S3 :: Error estableciendo conexion con el S3 ")
         }
-        try {
-            dynamo = new AWS.DynamoDB();
-        } catch (error) {
-            throw console.log("SaveHandler :: SDynamo :: Error estableciendo conexion con el Dynamo ")
-        }
-        if (s3==null ||dynamo==null){
-            throw new Error("SaveHandler :: AWS ::No se pudo completar la conexion con AWS");
-        }
-
         const uploadToS3 = async (file) => {
             if (!file) {
                 return;
