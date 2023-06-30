@@ -20,15 +20,24 @@ router.post('/album', function (req, res) {
     const {newAlbum}  = req.body;
 
     console.log('Controllers :: Client :: PostAlbum :: Data:', newAlbum);
-
+    if (newAlbum.albumId){
             return Albums.createAlbum(newAlbum, (error, b) => {
                 if (error) {
-                    console.log('Controllers :: Client :: PostAlbum :: Resultado: Error')
+                    console.log('Controllers :: Client :: PostAlbum :: SAVE :: Resultado: Error')
                     return res.status(500).json({ code: 'UE', message: 'Unkwown error' })
                 }
-                console.log('Controllers :: Client :: PostAlbum :: Resultado: Saved successfully!')
+                console.log('Controllers :: Client :: PostAlbum :: SAVE :: Resultado: Saved successfully!')
                 res.json({ code: 'OK', message: 'Saved successfully!', data: b.toJSON() })
             });
+        }
+        return Albums.updateAlbum(newAlbum, (error, b) => {
+            if (error) {
+                console.log('Controllers :: Client :: PostAlbum :: UPDATE :: Resultado: Error')
+                return res.status(500).json({ code: 'UE', message: 'Unkwown error' })
+            }
+            console.log('Controllers :: Client :: PostAlbum :: SAVE :: Resultado: Saved successfully!')
+            res.json({ code: 'OK', message: 'Saved successfully!', data: b.toJSON() })
+        });
 
 });
 

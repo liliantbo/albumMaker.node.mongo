@@ -11,19 +11,26 @@ function convertImageList(imageUrlList) {
 
   const convertImage = (imageUrl, index) => {
     return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      const file = new File([imageUrl], `image_${index}`, { type: 'image/*' });
+      fetch(imageUrl)
+        .then((response) => response.blob())
+        .then((blob) => {
+          const file = new File([blob], `image_${index}`, { type: 'image/*' });
+          const fileReader = new FileReader();
 
-      fileReader.onload = () => {
-        nuevaLista[index] = { file, item: fileReader.result };
-        resolve();
-      };
+          fileReader.onload = () => {
+            nuevaLista[index] = { file, item: fileReader.result, "status":"S3" };
+            resolve();
+          };
 
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
+          fileReader.onerror = (error) => {
+            reject(error);
+          };
 
-      fileReader.readAsDataURL(file);
+          fileReader.readAsDataURL(file);
+        })
+        .catch((error) => {
+          reject(error);
+        });
     });
   };
 
@@ -34,10 +41,11 @@ function convertImageList(imageUrlList) {
   return Promise.all(conversionPromises)
     .then(() => nuevaLista)
     .catch((error) => {
-      console.error('Error al convertir las imagenes:', error);
+      console.error('Error al convertir las imágenes:', error);
       return [];
     });
 }
+
 
 const DirectoryTable = (props) => {
   //redux reducer
@@ -80,8 +88,8 @@ const DirectoryTable = (props) => {
         <tbody>
           {updateAlbums.length > 0 ? (
             updateAlbums.map((album) => (
-              <tr key={album.id}>
-                <td>{album.id}</td>
+              <tr key={album.albumId}>
+                <td>{album.albumId}</td>
                 <td>{album.fecha}</td>
                 <td>{album.billing.name}</td>
                 <td>{album.shipping.address}</td>

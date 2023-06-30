@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const albums = new mongoose.Schema({
+  albumId: String,
   userEmail: String,
   fecha: Date,
   identificationNumber: String,

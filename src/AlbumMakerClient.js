@@ -60,7 +60,7 @@ export default function AlbumMakerClient() {
               city: album.cityS,
               address: album.addressS
             },
-            id: album._id,
+            albumId: album._id,
             imageList: [null, null, null, null, null, null],
             imageUrlList: album.imageUrlList,
             template: album.template,

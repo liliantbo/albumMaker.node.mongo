@@ -48,7 +48,7 @@ export default function AlbumEditor() {
             if (file) {
                 const reader = new FileReader();
                 reader.onload = () => {
-                    nuevaLista[index] = {"file":file, "item":reader.result};
+                    nuevaLista[index] = {"file":file, "item":reader.result, "status":"NEW"};
                     setImageList(nuevaLista);
                 };
                 reader.readAsDataURL(file);
@@ -68,7 +68,7 @@ export default function AlbumEditor() {
                 {
                     imageList.map((file, index) => {
                         const item=file?file.item:null;
-                        console.log("AlbumEditor :: Recorriendo imageList :: item: ",item);
+                        console.log("AlbumEditor :: Recorriendo imageList :: item: ",index, " status: ", file.status);
                         return (
                             <div
                                 className="d-flex align-items-center justify-content-center 

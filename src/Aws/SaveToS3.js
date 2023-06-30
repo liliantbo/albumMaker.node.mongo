@@ -3,7 +3,6 @@ import AWS from 'aws-sdk';
 export default async function SaveToS3(imageList) {
 
         let s3=null;
-        let dynamo =null;
         AWS.config.update({
             accessKeyId: 'ASIATIFAYCUFUUZN7CMQ',
             secretAccessKey: 'AMmgMltZ4SjMQ8G7LOD9o4jRaHD07AVW35GWvyFj',
@@ -34,7 +33,7 @@ export default async function SaveToS3(imageList) {
             }
         }
 
-        let imageUrlList = imageList.filter((e) => e != null);
+        let imageUrlList = imageList.filter((e) => e != null&&e.state=="NEW");
 
 
         const uploadPromises = imageUrlList.map(async (element) =>

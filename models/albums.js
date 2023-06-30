@@ -36,13 +36,18 @@ function getAlbumsByUserEmail(emailValue, cb) {
 
 
 // UPDATE
-const updateAlbumById = (albumId, updateData) => {
-  return Albums.findByIdAndUpdate(albumId, updateData, { new: true })
-    .then(updatedAlbum => updatedAlbum)
-    .catch(() => {
-      throw new Error('Error updating album');
-    });
-};
+function updateAlbum(albumData, cb) {
+  new Albums(albumData)
+  .findByIdAndUpdate(albumData._id, albumData, { new: false })
+  .then((elem) => {
+      return cb(null, elem);
+  })
+  .catch((error) => {
+      console.log('Error updating album:', error);
+      return cb(error);
+  });
+}
+
 
 // DELETE
 const deleteAlbumById = (albumId) => {
@@ -56,5 +61,5 @@ const deleteAlbumById = (albumId) => {
 exports.createAlbum = createAlbum;
 exports.getAllAlbums = getAllAlbums;
 exports.getAlbumsByUserEmail = getAlbumsByUserEmail;
-exports.updateAlbumById = updateAlbumById;
+exports.updateAlbum = updateAlbum;
 exports.deleteAlbumById = deleteAlbumById;

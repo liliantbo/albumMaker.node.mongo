@@ -42,6 +42,8 @@ const initialState = {
 
 export function albumReducer(state = initialState, action) {
     console.log("AlbumReducer :: Action :: Type: ", action.type);
+    console.log("AlbumReducer :: State :: Flow: ", state.flow);
+    console.log("AlbumReducer :: State :: SelectedOption: ", state.selectedOption);
     switch (action.type) {
         case 'goToAlbum':
             return {
