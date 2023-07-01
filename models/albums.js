@@ -54,12 +54,11 @@ function getAlbumsByCourier(courierName, cb) {
 // UPDATE
 function updateAlbum(albumData, cb) {
   const updatedData = { ...albumData };
-  delete updatedData.albumId;
   const newfecha = new Date();
   updatedData.fecha = newfecha;
 
   return Albums.findByIdAndUpdate(
-    albumData.albumId,
+    albumData._id,
     { $set: updatedData },
     { new: true }
   )
@@ -70,6 +69,17 @@ function updateAlbum(albumData, cb) {
       console.log('Error updating album:', error);
       return cb(error);
     });
+}
+
+function getAlbumsById(albumId, cb) {
+  Albums.findOne({ _id: albumId })
+    .then((elems) => {
+      return cb(null, elems);
+    })
+    .catch((error) => {
+      console.log('Error retrieving albums by id', error);
+      return cb(error);
+    })
 }
 
 
@@ -87,4 +97,5 @@ exports.getAllAlbums = getAllAlbums;
 exports.getAlbumsByUserEmail = getAlbumsByUserEmail;
 exports.getAlbumsByCourier=getAlbumsByCourier;
 exports.updateAlbum = updateAlbum;
+exports.getAlbumsById = getAlbumsById;
 exports.deleteAlbumById = deleteAlbumById;
