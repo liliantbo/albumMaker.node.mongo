@@ -4,7 +4,7 @@ const Albums = require('../../models/albums');
 const Couriers = require('../../models/couriers')
 
 router.get('/', (req, res) => {
-    
+
     const { email } = req.session.user;
     //const email = "liliantbo@gmail.com"
     console.log('Controllers :: Client :: getAlbums :: email:', email);
@@ -22,7 +22,7 @@ router.post('/album', function (req, res) {
     const {newAlbum}  = req.body;
 
     console.log('Controllers :: Client :: PostAlbum :: Data:', newAlbum);
-    if (!newAlbum.albumId){
+    if (!newAlbum._id){
             return Albums.createAlbum(newAlbum, (error, b) => {
                 if (error) {
                     console.log('Controllers :: Client :: PostAlbum :: SAVE :: Resultado: Error')
