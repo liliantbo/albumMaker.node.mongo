@@ -1,4 +1,5 @@
 import React from "react";
+import { format } from 'date-fns';
 
 import { useDispatch } from 'react-redux';
 import { editAlbum } from '../reducers/albumActions';
@@ -90,9 +91,9 @@ const DirectoryTable = (props) => {
             updateAlbums.map((album) => (
               <tr key={album.albumId}>
                 <td>{album.albumId}</td>
-                <td>{album.fecha}</td>
+                <td>{format(new Date(album.fecha), 'dd/MM/yyyy')}</td>
                 <td>{album.billing.name}</td>
-                <td>{album.shipping.address}</td>
+                <td>{album.shipping.city + " - "+ album.shipping.address}</td>
                 <td>{album.estado}</td>
                 <td>{album.courier}</td>
                 <td>{album.motivoCancelacion}</td>

@@ -1,51 +1,64 @@
 const Albums = require('../schemas/albums');
 
 function createAlbum(albumData, cb) {
-  new Albums(albumData)
-  .save()
-  .then((elem) => {
-      return cb(null, elem);
-  })
-  .catch((error) => {
-      console.log('Error creating album:', error);
-      return cb(error);
-  });
-}
+  const newfecha = new Date();
+  let newAlbum = { albumData };
+  newAlbum.fecha = newfecha;
 
-function getAllAlbums(cb){
-     Albums.find({})
-    .then((elems) => {
-        return cb(null, elems);
+  new Albums(newAlbum)
+    .save()
+    .then((elem) => {
+      return cb(null, elem);
     })
     .catch((error) => {
-        console.log('Error retrieving albums', error);
-        return cb(error);
+      console.log('Error creating album:', error);
+      return cb(error);
+    });
+}
+
+
+function getAllAlbums(cb) {
+  Albums.find({})
+    .then((elems) => {
+      return cb(null, elems);
+    })
+    .catch((error) => {
+      console.log('Error retrieving albums', error);
+      return cb(error);
     })
 };
 
 function getAlbumsByUserEmail(emailValue, cb) {
-  Albums.find({ userEmail: emailValue})
-  .then((elems) => {
-    return cb(null, elems);
-  })
-  .catch((error) => {
+  Albums.find({ userEmail: emailValue })
+    .then((elems) => {
+      return cb(null, elems);
+    })
+    .catch((error) => {
       console.log('Error retrieving user albums', error);
       return cb(error);
-  })
+    })
 }
 
 
 // UPDATE
 function updateAlbum(albumData, cb) {
-  new Albums(albumData)
-  .findByIdAndUpdate(albumData._id, albumData, { new: false })
-  .then((elem) => {
+  const updatedData = { ...albumData };
+  delete updatedData.albumId;
+  const newfecha = new Date();
+  updatedData.fecha = newfecha;
+
+  return Albums.findByIdAndUpdate(
+    albumData.albumId,
+    { $set: updatedData },
+    { new: true }
+  )
+    .then((elem) => {
       return cb(null, elem);
-  })
-  .catch((error) => {
+    })
+    .catch((error) => {
       console.log('Error updating album:', error);
       return cb(error);
-  });
+    });
 }
 
 

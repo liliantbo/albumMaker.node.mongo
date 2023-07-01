@@ -3,7 +3,7 @@ import axios from "axios";
 import { format } from 'date-fns';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { processComplete, saveComplete } from '../reducers/albumActions';
+import { updateAlbumList, processComplete, saveComplete } from '../reducers/albumActions';
 import { FLOW_PROCESED, FLOW_SAVED } from '../commonComponents/Properties';
 
 
@@ -11,6 +11,7 @@ import BillingViewer from '../BillingAndShipping/BillingViewer';
 import AlbumViewer from '../Album/AlbumViewer';
 import ProcessCompleteMessage from './ProcessCompleteMessage';
 import SaveToS3 from '../Aws/SaveToS3';
+import mongoToRedux from '../commonComponents/mongoToRedux';
 
 export default function OrderResume() {
 
@@ -18,7 +19,6 @@ export default function OrderResume() {
   const flow = useSelector(state => state.alb.flow);
   const albumData = useSelector(state => state.alb);
   const isProcessedFlow = flow === FLOW_PROCESED || flow === FLOW_SAVED;
-  const isEditedAlbum = albumData.id;
 
   //redux reducer
   const dispatch = useDispatch();
@@ -40,26 +40,34 @@ export default function OrderResume() {
       "telephoneS": albumData.shipping.telephone,
       "cityS": albumData.shipping.city,
       "addressS": albumData.shipping.address,
-      "imageUrlList": null,
+      "imageUrlList": albumData.imageUrlList,
       "template": albumData.template,
       "estado": albumData.estado,
       "operador": albumData.operador,
       "courier": albumData.courier,
       "motivoCancelacion": albumData.motivoCancelacion
     };
-    const saveNewImages = albumData.imageList.some((file) => file.state === "NEW");
+    console.log("OrderResume :: SaveAlbum :: imageLuist: ", albumData.imageList);
+    const saveNewImages = albumData.imageList.some((file) => file&&file.status === "NEW");
+    console.log("OrderResume :: SaveAlbum :: saveNewImage: ", saveNewImages);
+
     if (saveNewImages) {
       const uploadedUrls = await SaveToS3(albumData.imageList);
+      console.log("OrderResume :: SaveAlbum :: uploadedUrls:",uploadedUrls);
       newAlbum.imageUrlList = uploadedUrls;
     }
 
-    console.log('OrderResume :: SaveAlbum :: albumNew: ', newAlbum);
+    console.log("OrderResume :: SaveAlbum :: albumNew: ", newAlbum);
 
     return axios
       .post("http://localhost:3000/clients/album", { newAlbum })
       .then((response) => {
-        console.log('Data:', response);
+        const data =mongoToRedux(response.data.data);
+        console.log('Data:', data);
         console.log("OrderResume :: handleOnClick :: Album almacenado exitosamente");
+        let newAlbumList=albumData.albumList&&[...albumData.albumList];
+        newAlbumList.push(data);
+        dispatch(updateAlbumList(newAlbumList));
         dispatch(saveComplete());
       })
       .catch((error) => {

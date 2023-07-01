@@ -68,7 +68,7 @@ export default function AlbumEditor() {
                 {
                     imageList.map((file, index) => {
                         const item=file?file.item:null;
-                        console.log("AlbumEditor :: Recorriendo imageList :: item: ",index, " status: ", file.status);
+                        console.log("AlbumEditor :: Recorriendo imageList :: item: ",index, " status: ", file?file.status:"");
                         return (
                             <div
                                 className="d-flex align-items-center justify-content-center 

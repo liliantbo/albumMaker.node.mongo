@@ -64,3 +64,9 @@ export const editAlbum = (selectedAlbum) => {
   return { type: 'editAlbum', 
           newAlbum: selectedAlbum };
 };
+export const updateAlbumList = (albumList) => {
+  return {
+    type: 'updateAlbumList',
+    newAlbumList: albumList
+  }
+}

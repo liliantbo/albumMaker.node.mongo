@@ -8,7 +8,7 @@ import {
 const initialState = {
     flow: FLOW_LIST,
     selectedOption: OPTION_ALBUM,
-   
+    albumList: [],
     template: TEMPLATE_BIRTHDAY,
     billing: {
         "name": '',
@@ -32,7 +32,7 @@ const initialState = {
     imageList: [null, null, null, null, null, null],
     imageUrlList: null,
     estado: STATE_SENDED,
-    id:'',
+    id: '',
     userEmail: '',
     fecha: null,
     operador: '',
@@ -44,6 +44,8 @@ export function albumReducer(state = initialState, action) {
     console.log("AlbumReducer :: Action :: Type: ", action.type);
     console.log("AlbumReducer :: State :: Flow: ", state.flow);
     console.log("AlbumReducer :: State :: SelectedOption: ", state.selectedOption);
+    console.log("AlbumReducer :: Action :: action: ", action);
+    console.log("AlbumReducer :: Action :: state: ", state);
     switch (action.type) {
         case 'goToAlbum':
             return {
@@ -76,13 +78,11 @@ export function albumReducer(state = initialState, action) {
             return {
                 ...state,
                 flow: FLOW_PROCESED,
-                selectedOption: OPTION_RESUME,
             };
         case 'saveComplete':
             return {
                 ...state,
                 flow: FLOW_SAVED,
-                selectedOption: OPTION_RESUME,
             };
         case 'newAlbum':
             return {
@@ -126,11 +126,17 @@ export function albumReducer(state = initialState, action) {
                 flow: FLOW_LIST,
             };
         case 'editAlbum':
-                return {
-                    ...action.newAlbum,
-                    flow: FLOW_NEW,
-                    selectedOption: OPTION_ALBUM,
-                };
+            return {
+                ...state,
+                ...action.newAlbum,
+                flow: FLOW_NEW,
+                selectedOption: OPTION_ALBUM,
+            };
+        case 'updateAlbumList':
+            return {
+                ...state,
+                albumList: action.newAlbumList,
+            };
         default:
             return state;
     }
