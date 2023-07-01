@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
-const users = mongoose.Schema({
+const couriers = mongoose.Schema({
     name: String,
     status:String
 });
 
-const Users = new mongoose.model('couriers', couriers);
+const Couriers = new mongoose.model('couriers', couriers);
 
-module.exports = Users;
+module.exports = Couriers;
