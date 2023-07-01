@@ -1,60 +1,90 @@
-import React from 'react';
-import { ReactComponent as CreateNewAlbumIcon } from './document-new.svg'
-import { ReactComponent as ToogleThemeIcon } from './Users/theme-light-dark.svg'
-import './App.css';
+import React, { useEffect } from 'react';
+import axios from "axios";
 
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { useSelector, useDispatch } from 'react-redux';
+import { listAlbums, updateAlbumList } from './reducers/albumActions';
+import { listStatistics } from './reducers/adminActions';
+import { PAGE_ALBUM, PAGE_STATISTICS, ROL_ADMIN } from './commonComponents/Properties';
 
-import { useSelector } from 'react-redux';
+import AlbumList from './AlbumList';
+import mongoToRedux from './commonComponents/mongoToRedux';
 
 export default function AlbumMakerAdmin() {
+
   //redux store
-  const theme = useSelector(state => state.alb.theme);
+  const rol = useSelector(state => state.auth.user.rol);
+  const albums = useSelector(state => state.alb.albumList);
+  const actualPage = useSelector(state => state.adm.actualPage);
+
+  const isAdminUser=rol===ROL_ADMIN;
+  const isAlbumPage=actualPage===PAGE_ALBUM;
 
   //redux reducer
-
-  const newAlbumHandler = () => {
+  const dispatch = useDispatch();
+  const statisticsHandler = () => {
+    dispatch(listStatistics());
   };
-  const changeThemeHandler = () => {
+  const allAlbumHandler = () => {
+    dispatch(listAlbums());
   };
 
-  const newAlbumTooltip = (
-    <Tooltip id="newAlbumTooltip">Nuevo Album</Tooltip>
-  );
+  const setAlbums=(albumList)=>{
+    dispatch(updateAlbumList(albumList));
+  }
+  const editAlbum = (album) => {
+    return null;
+  };
+  const deleteAlbum = (id) => {
+    setAlbums(albums.filter((album) => album.id !== id));
+  };
 
-  const changeThemeTooltip = (
-    <Tooltip id="changeThemeTooltip">Cambiar tema</Tooltip>
-  );
+  useEffect(() => {
+    axios.get("http://localhost:3000/admins")
+      .then((response) => {
+        console.log("ALbumMakerAdmin :: useEffect :: response: ", response);
+        const data = response.data.map((album) =>mongoToRedux(album));
+        console.log("ALbumMakerAdmin :: useEffect :: data: ", data);
+        setAlbums(data);
+      })
+      .catch((error) => {
+        console.error("ALbumMakerAdmin :: useEffect :: error: ", error);
+      });
+  }, []);
 
+  const renderContent = () => {
+    switch (actualPage) {
+        case PAGE_ALBUM:
+            return <AlbumList albums={albums} editAlbum={editAlbum} deleteAlbum={deleteAlbum}/>;
+        case PAGE_STATISTICS:
+            return isAdminUser ? null : <AlbumList editAlbum={editAlbum} deleteAlbum={deleteAlbum}/>;;
+        default:
+            return null;
+    }
+};
   return (
-    <div className={`App ${theme}`}>
-      <header className="d-flex flex-row bg-primary bd-highlight" style={{ height: '10vh' }}>
-        <div className="me-auto p-2 bd-highlight">
-          <p className="logo text-light">Album Maker</p>
-        </div>
-        <ul className="nav flex-row d-flex p-2 bd-highlight 
-        justify-content-end align-items-stretch">
-          <li className="nav-item me-3">
-            <OverlayTrigger placement="bottom" overlay={newAlbumTooltip}>
-              <button className="btn btn-primary btn-focus shadow-none"
-                onClick={newAlbumHandler}>
-                <CreateNewAlbumIcon aria-hidden="true" />
-              </button>
-            </OverlayTrigger>
+    <div>
+      <header className="d-flex flex-row bg-black bd-highlight">
+        <ul className="nav flex-row d-flex p-0 bd-highlight 
+        justify-content-start align-items-stretch">
+          <li className="nav-item d-flex align-items-stretch me-3">
+            <button className={`btn btn-dark btn-focus shadow-none ${isAlbumPage ? 'bg-secondary' : ''}`}
+              onClick={allAlbumHandler}>
+              Ordenes
+            </button>
           </li>
           <li className="nav-item me-3">
-            <OverlayTrigger placement="bottom" overlay={changeThemeTooltip}>
-              <button className="btn btn-primary btn-focus shadow-none"
-                onClick={changeThemeHandler}>
-                <ToogleThemeIcon aria-hidden="true" />
-              </button>
-            </OverlayTrigger>
+            <button className={`btn btn-dark btn-focus shadow-none ${!isAlbumPage ? 'bg-secondary' : ''}`}
+              onClick={statisticsHandler}>
+              Estadisticas
+            </button>
           </li>
         </ul>
       </header >
-      <div className="d-flex flex-row " style={{ height: '83vh' }}>
-        Album maker ADMIN
-      </div>
+      
+        <div className="d-flex flex-row " style={{ height: '83vh' }}>
+        {renderContent()}          
+        </div>
+     
     </div >
   );
 }

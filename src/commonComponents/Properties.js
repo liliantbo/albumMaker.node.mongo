@@ -29,5 +29,9 @@ export const TEMPLATE_BIRTHDAY='birthday';
 export const TEMPLATE_LOVE='love';
 
 //messajes de exito
-export const MESSAGE_PROCESSED='Album no almacenado en AWS';
-export const MESSAGE_SAVED='Album almacenado en AWS exitosamente';
+export const MESSAGE_PROCESSED='Album no almacenado en MONGO';
+export const MESSAGE_SAVED='Album almacenado en MONGO exitosamente';
+
+//valores de admin
+export const PAGE_ALBUM="albumPage";
+export const PAGE_STATISTICS="statisticsPage";

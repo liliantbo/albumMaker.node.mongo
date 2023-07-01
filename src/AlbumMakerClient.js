@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import axios from "axios";
 
 import { useSelector, useDispatch } from 'react-redux';
 import { newAlbum, listAlbums, updateAlbumList } from './reducers/albumActions';
 import { FLOW_LIST } from './commonComponents/Properties';
 
+import AlbumList from './AlbumList';
 import AlbumMakerCreator from './AlbumMakerCreator';
-import DirectoryTable from './commonComponents/DirectoryTable';
 import mongoToRedux from './commonComponents/mongoToRedux';
 
 export default function AlbumMakerClient() {
@@ -25,13 +25,9 @@ export default function AlbumMakerClient() {
   const allAlbumHandler = () => {
     dispatch(listAlbums());
   };
-
   const setAlbums=(albumList)=>{
     dispatch(updateAlbumList(albumList));
   }
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const [albumsPerPage] = useState(10);
   const editAlbum = (album) => {
     return null;
   };
@@ -52,10 +48,16 @@ export default function AlbumMakerClient() {
       });
   }, []);
   
-
-  const indexOfLastAlbum = currentPage * albumsPerPage;
-  const indexOfFirstAlbum = indexOfLastAlbum - albumsPerPage;
-  const currentAlbums = Array.isArray(albums) ? albums.slice(indexOfFirstAlbum, indexOfLastAlbum) : [];
+  const renderContent = () => {
+    switch (flow) {
+        case FLOW_LIST:
+            return <AlbumList albums={albums} 
+            editAlbum={editAlbum} 
+            deleteAlbum={deleteAlbum}/>;       
+        default:
+            return <AlbumMakerCreator />;
+    }
+  }
 
   return (
     <div>
@@ -76,16 +78,9 @@ export default function AlbumMakerClient() {
           </li>
         </ul>
       </header >
-      {!isListFlow ? <AlbumMakerCreator /> : (
         <div className="d-flex flex-row " style={{ height: '83vh' }}>
-          <DirectoryTable
-            albums={currentAlbums}
-            editAlbum={editAlbum}
-            deleteAlbum={deleteAlbum}
-          />
-          
+        {renderContent()} 
         </div>
-      )}
     </div >
   );
 }
