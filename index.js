@@ -1,6 +1,7 @@
 const express = require("express");
 const engine = require('ejs-locals');
 const session = require('express-session')
+const authCouriers = require('./middlewares/authCouriers');
 
 const db = require('./db');
 
@@ -32,7 +33,7 @@ app.use('/users', AdminUsers)
 app.use('/couriers', AdminCouriers)
 app.use('/admin', AdminAlbums)
 app.use('/client', ClientAlbums)
-app.use('/courier', CourierAlbums)
+app.use('/courier',authCouriers,  CourierAlbums)
 
 app.use(express.static(path.join(__dirname, "build")));
 
