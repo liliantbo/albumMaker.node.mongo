@@ -1,11 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const Couriers = require('../../models/couriers')
+const nodecache = require('node-cache');
+const cache = new nodecache({stdTTL: 60})
 
 router.get('/', (req, res) => {
-    const courierNameList = req.session.courierNameList;
-    if (courierNameList) {
-        console.log("Contorllers :: Admin :: Couriers :: Session: ",courierNameList)
+    const key = 'courierNameList';
+    let courierNameList = null;
+    if (cache.has(key)) {
+        courierNameList=cache.get(key);
+        console.log("Contorllers :: Admin :: Couriers :: Cache: ",courierNameList)
         res.json(courierNameList)
     } else {
         return Couriers.getCourierByStatus("ACTIVO", (error, elems) => {
@@ -13,7 +17,7 @@ router.get('/', (req, res) => {
                 return res.status(500).json({ code: 'UE', message: 'Unknown error' })
             }
             console.log("Contorllers :: Admin :: Couriers :: Mongo: ",elems);
-            req.session.courierNameList = elems;
+            cache.set( key, elems)
             res.json(elems);
         });
     }

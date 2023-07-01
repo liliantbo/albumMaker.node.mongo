@@ -39,6 +39,17 @@ function getAlbumsByUserEmail(emailValue, cb) {
     })
 }
 
+function getAlbumsByCourier(courierName, cb) {
+  Albums.find({ courier: courierName })
+    .then((elems) => {
+      return cb(null, elems);
+    })
+    .catch((error) => {
+      console.log('Error retrieving albums by courier', error);
+      return cb(error);
+    })
+}
+
 
 // UPDATE
 function updateAlbum(albumData, cb) {
@@ -74,5 +85,6 @@ const deleteAlbumById = (albumId) => {
 exports.createAlbum = createAlbum;
 exports.getAllAlbums = getAllAlbums;
 exports.getAlbumsByUserEmail = getAlbumsByUserEmail;
+exports.getAlbumsByCourier=getAlbumsByCourier;
 exports.updateAlbum = updateAlbum;
 exports.deleteAlbumById = deleteAlbumById;

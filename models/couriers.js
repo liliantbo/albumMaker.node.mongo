@@ -21,6 +21,17 @@ function getCourierByStatus(courierStatus, cb) {
         return cb(error);
       })
   }
+  function getCourierByUserName(courierUserName, cb) {
+    Couriers.findOne({ userName: courierUserName })
+      .then((elems) => {
+        return cb(null, elems);
+      })
+      .catch((error) => {
+        console.log('Error retrieving couriers by username', error);
+        return cb(error);
+      })
+  }
 
   exports.getCourier = getCourier;
   exports.getCourierByStatus = getCourierByStatus;
+  exports.getCourierByUserName=getCourierByUserName;

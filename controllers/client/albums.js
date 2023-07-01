@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const Albums = require('../../models/albums');
+const Couriers = require('../../models/couriers')
 
 router.get('/', (req, res) => {
-    //const { email } = req.session.user;
-    const email = "liliantbo@gmail.com"
+    
+    const { email } = req.session.user;
+    //const email = "liliantbo@gmail.com"
     console.log('Controllers :: Client :: getAlbums :: email:', email);
     return Albums.getAlbumsByUserEmail(email, (error, elems) => {
         if (error) {
