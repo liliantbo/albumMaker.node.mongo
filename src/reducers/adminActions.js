@@ -11,3 +11,9 @@ export const logout = () => {
 export const changeTheme = () => {
     return { type: 'changeTheme' };
 };
+export const updateCourierList = (courierList) => {
+    return {
+        type: 'updateCourierList',
+        newCourierList: courierList
+    };
+};

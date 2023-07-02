@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import DirectoryTable from './commonComponents/DirectoryTable';
+import DirectoryTable from './DirectoryTable';
 export default function AlbumList({albums, editAlbum, deleteAlbum, cancelAlbum}) {
     const [currentPage, setCurrentPage] = useState(1);
     const [albumsPerPage] = useState(10);

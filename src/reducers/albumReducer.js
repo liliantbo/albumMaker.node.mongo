@@ -137,6 +137,11 @@ export function albumReducer(state = initialState, action) {
                 ...state,
                 albumList: action.newAlbumList,
             };
+        case 'changeCourier':
+            return {
+                ...state,
+                courier: action.newCourier,
+            };
         default:
             return state;
     }

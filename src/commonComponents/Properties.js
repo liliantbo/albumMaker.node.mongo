@@ -5,6 +5,10 @@ export const ROL_ADMIN="ADMIN";
 
 //constantes de estados del album
 export const STATE_SENDED="ENVIADA";
+export const STATE_DISPATCH="EN DESPACHO";
+export const STATE_DELIVERED="ENTREGADA";
+export const STATE_RETURNED="DEVUELTA POR COURIER";
+export const STATE_CANCELED="CANCELED";
 
 //valores que puede tomar el estado flow
 export const FLOW_LIST = 'list';

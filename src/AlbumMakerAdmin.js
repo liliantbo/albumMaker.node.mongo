@@ -6,7 +6,7 @@ import { listAlbums, updateAlbumList } from './reducers/albumActions';
 import { listStatistics } from './reducers/adminActions';
 import { PAGE_ALBUM, PAGE_STATISTICS, ROL_ADMIN } from './commonComponents/Properties';
 
-import AlbumList from './AlbumList';
+import AlbumList from './commonComponents/AlbumList';
 import mongoToRedux from './commonComponents/mongoToRedux';
 
 export default function AlbumMakerAdmin() {
@@ -39,7 +39,7 @@ export default function AlbumMakerAdmin() {
   };
 
   useEffect(() => {
-    axios.get("http://localhost:3000/admins")
+    axios.get("http://localhost:3000/admin")
       .then((response) => {
         console.log("ALbumMakerAdmin :: useEffect :: response: ", response);
         const data = response.data.map((album) =>mongoToRedux(album));
@@ -56,7 +56,7 @@ export default function AlbumMakerAdmin() {
         case PAGE_ALBUM:
             return <AlbumList albums={albums} editAlbum={editAlbum} deleteAlbum={deleteAlbum}/>;
         case PAGE_STATISTICS:
-            return isAdminUser ? null : <AlbumList editAlbum={editAlbum} deleteAlbum={deleteAlbum}/>;;
+            return isAdminUser ? null : <AlbumList editAlbum={editAlbum} deleteAlbum={deleteAlbum}/>;
         default:
             return null;
     }

@@ -19,7 +19,7 @@ export default function mongoToRedux(album){
         city: album.cityS,
         address: album.addressS
       },
-      albumId: album._id,
+      _id: album._id,
       imageList: [null, null, null, null, null, null],
       imageUrlList: album.imageUrlList,
       template: album.template,

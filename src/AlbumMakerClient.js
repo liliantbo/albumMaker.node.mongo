@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { newAlbum, listAlbums, updateAlbumList } from './reducers/albumActions';
 import { FLOW_LIST } from './commonComponents/Properties';
 
-import AlbumList from './AlbumList';
+import AlbumList from './commonComponents/AlbumList';
 import AlbumMakerCreator from './AlbumMakerCreator';
 import mongoToRedux from './commonComponents/mongoToRedux';
 
@@ -36,7 +36,7 @@ export default function AlbumMakerClient() {
   };
 
   useEffect(() => {
-    axios.get("http://localhost:3000/clients")
+    axios.get("http://localhost:3000/client")
       .then((response) => {
         console.log("ALbumMakerClient :: useEffect :: response: ", response);
         const data = response.data.map((album) =>mongoToRedux(album));

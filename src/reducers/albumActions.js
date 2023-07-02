@@ -70,3 +70,10 @@ export const updateAlbumList = (albumList) => {
     newAlbumList: albumList
   }
 }
+export const changeCourier = (courier) => {
+  return {
+      type: 'changeCourier',
+      newCourier:courier
+  };
+};
+

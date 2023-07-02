@@ -53,6 +53,7 @@ export default function Landing() {
         setError("Usuario o password incorrectos");
       });
   };
+  
   const logoutUser = (user) => {
     axios
       .post("http://localhost:3000/users/logout", { user })
