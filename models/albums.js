@@ -16,7 +16,6 @@ function createAlbum(albumData, cb) {
     });
 }
 
-
 function getAllAlbums(cb) {
   Albums.find({})
     .then((elems) => {
@@ -82,6 +81,37 @@ function getAlbumsById(albumId, cb) {
     })
 }
 
+function updateAlbumList({ albums, courierName }, cb) {
+  const albumIds = albums.map((album) => album._id);
+  let filter = { _id: { $in: albumIds } };
+  if (courierName !== null) {
+    filter.courier = courierName;
+  }
+
+  let update = {
+    $set: {}
+  };
+  for (const album of albums) {
+    for (const key in album) {
+      if (album[key] !== null) {
+        update.$set[key] = album[key];
+      }
+    }
+  }
+  console.log("Models :: Albums :: updateAlbumList :: filter", filter);
+  console.log("Models :: Albums :: updateAlbumList :: update", update);
+
+  Albums.updateMany(filter, update)
+    .then((result) => {
+      console.log('Álbumes actualizados exitosamente');
+      return cb(null, result);
+    })
+    .catch((error) => {
+      console.error('Error al actualizar los álbumes:', error);
+      return cb(error);
+    });
+}
+
 
 // DELETE
 const deleteAlbumById = (albumId) => {
@@ -99,3 +129,4 @@ exports.getAlbumsByCourier=getAlbumsByCourier;
 exports.updateAlbum = updateAlbum;
 exports.getAlbumsById = getAlbumsById;
 exports.deleteAlbumById = deleteAlbumById;
+exports.updateAlbumList = updateAlbumList;
