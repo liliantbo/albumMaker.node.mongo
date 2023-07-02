@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 import axios from "axios";
 
 import { useSelector, useDispatch } from 'react-redux';
-import { newAlbum, listAlbums, updateAlbumList } from './reducers/albumActions';
-import { FLOW_LIST } from './commonComponents/Properties';
+import { newAlbum, listAlbums, updateAlbumList } from '../reducers/albumActions';
+import { FLOW_LIST } from '../commonComponents/Properties';
 
-import AlbumList from './commonComponents/AlbumList';
+import AlbumList from '../commonComponents/AlbumList';
 import AlbumMakerCreator from './AlbumMakerCreator';
-import mongoToRedux from './commonComponents/mongoToRedux';
+import mongoToRedux from '../commonComponents/mongoToRedux';
 
 export default function AlbumMakerClient() {
 

@@ -3,12 +3,13 @@ import axios from "axios";
 import { Alert, OverlayTrigger, Tooltip  } from 'react-bootstrap';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { listAlbums, updateAlbumList } from './reducers/albumActions';
-import { listStatistics } from './reducers/adminActions';
-import { PAGE_ALBUM, PAGE_STATISTICS, ROL_ADMIN } from './commonComponents/Properties';
+import { updateAlbumList } from '../reducers/albumActions';
+import { showAlbums, showStatistics } from '../reducers/adminActions';
+import { PAGE_ALBUM, PAGE_STATISTICS, ROL_ADMIN } from '../commonComponents/Properties';
 
-import AlbumList from './commonComponents/AlbumList';
-import mongoToRedux from './commonComponents/mongoToRedux';
+import AlbumList from '../commonComponents/AlbumList';
+import Statistics from './Statistics';
+import mongoToRedux from '../commonComponents/mongoToRedux';
 import { ReactComponent as SaveIcon } from './save.svg';
 
 const loginTooltip = (
@@ -28,10 +29,10 @@ export default function AlbumMakerAdmin() {
   //redux reducer
   const dispatch = useDispatch();
   const statisticsHandler = () => {
-    dispatch(listStatistics());
+    dispatch(showStatistics());
   };
   const allAlbumHandler = () => {
-    dispatch(listAlbums());
+    dispatch(showAlbums());
   };
   const saveHandler = () => {
     setSave(true);
@@ -68,7 +69,7 @@ export default function AlbumMakerAdmin() {
         case PAGE_ALBUM:
             return <AlbumList albums={albums} editAlbum={editAlbum} deleteAlbum={deleteAlbum}/>;
         case PAGE_STATISTICS:
-            return isAdminUser ? null : <AlbumList editAlbum={editAlbum} deleteAlbum={deleteAlbum}/>;
+            return isAdminUser ?<Statistics/>:null;
         default:
             return null;
     }
@@ -84,19 +85,22 @@ export default function AlbumMakerAdmin() {
               Ordenes
             </button>
           </li>
+          {isAdminUser && (
           <li className="nav-item me-3">
             <button className={`btn btn-dark btn-focus shadow-none ${!isAlbumPage ? 'bg-secondary' : ''}`}
               onClick={statisticsHandler}>
               Estadisticas
             </button>
           </li>
+          )}
+          {isAlbumPage && (
           <li className="nav-item me-3">
             <OverlayTrigger placement="bottom" overlay={loginTooltip}>
               <button className="btn btn-primary btn-focus shadow-none" onClick={saveHandler}>
                 <SaveIcon aria-hidden="true" />
               </button>
             </OverlayTrigger>
-          </li>
+          </li>)}
         </ul>
       </header >
       {save && <Alert variant="success">Cambios Almacenados Exitosamente</Alert>}

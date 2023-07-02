@@ -1,6 +1,11 @@
-export const listStatistics = (user) => {
+export const showStatistics = (user) => {
     return {
-        type: 'listStatistics',
+        type: 'showStatistics',
+    };
+};
+export const showAlbums = (user) => {
+    return {
+        type: 'showAlbums',
     };
 };
 export const logout = () => {

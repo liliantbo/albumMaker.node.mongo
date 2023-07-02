@@ -1,8 +1,8 @@
 import React from 'react';
 
-import AlbumFooter from './AlbumFooter';
-import AlbumBody from './AlbumBody/BodyOptions';
-import BodyMain from './AlbumBody/BodyMain';
+import AlbumFooter from '../commonComponents/AlbumFooter';
+import AlbumBody from '../AlbumBody/BodyOptions';
+import BodyMain from '../AlbumBody/BodyMain';
 
 export default function AlbumMakerCreator() {
  

@@ -4,7 +4,7 @@ import {
     FLOW_BILLING, FLOW_NEW, FLOW_PROCESED,
     FLOW_PROCESS, FLOW_SAVED, OPTION_ALBUM, OPTION_BILL,
     OPTION_RESUME
-} from "./commonComponents/Properties";
+} from "./Properties";
 
 export default function ProgressBar() {
     //redux store

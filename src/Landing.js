@@ -8,8 +8,8 @@ import { ROL_USER } from './commonComponents/Properties';
 
 import Login from './Users/Login';
 import LoginForm from './Users/LoginForm'
-import AlbumMakerClient from './AlbumMakerClient';
-import AlbumMakerAdmin from './AlbumMakerAdmin';
+import AlbumMakerClient from './Client/AlbumMakerClient';
+import AlbumMakerAdmin from './Admin/AlbumMakerAdmin';
 import Modal from './commonComponents/Modal'
 
 import { ReactComponent as LoginIcon } from './Users/user1.svg';

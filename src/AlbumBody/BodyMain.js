@@ -8,7 +8,7 @@ import {
 } from '../commonComponents/Properties'
 
 //componente de barra de progreso
-import ProgressBar from "../ProgressBar"
+import ProgressBar from "../commonComponents/ProgressBar"
 
 //compontentes de Album
 import AlbumEditor from '../Album/AlbumEditor';
