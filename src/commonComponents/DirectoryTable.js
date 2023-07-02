@@ -5,8 +5,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { editAlbum, updateAlbumList } from '../reducers/albumActions';
 
 import { ReactComponent as EditIcon } from './image-edit-outline.svg';
-import { STATE_SENDED, ROL_USER, STATE_DISPATCH } from "./Properties";
-import CourierList from "./CourierList";
+import { STATE_SENDED, ROL_USER, STATE_DISPATCH, STATE_CANCELED } from "./Properties";
+import OrderOptions from "./OrderOptions";
 
 function convertImageList(imageUrlList) {
   const nuevaLista = [];
@@ -69,12 +69,39 @@ const DirectoryTable = (props) => {
         console.error('Error al convertir las imágenes:', error);
       });
   };
+
   const editAlbumAdminHandler = (newAlbum) => {
     const updatedAlbums = updateAlbums.map((album) =>
       album._id === newAlbum._id ? newAlbum : album
     );
     dispatch(updateAlbumList(updatedAlbums));
   };
+
+  const cancelAlbumAdminHandler = (newAlbum) => {
+    const updatedAlbums = updateAlbums.map((album) =>
+      album._id === newAlbum._id ? newAlbum : album
+    );
+    dispatch(updateAlbumList(updatedAlbums));
+  };
+
+  const deleteAlbumAdminHandler = (newAlbum) => {
+    const updatedAlbums = updateAlbums.map((album) =>
+      album._id === newAlbum._id ? newAlbum : album
+    );
+    dispatch(updateAlbumList(updatedAlbums));
+  };
+
+  function handleMotivoCancelacionChange({ albumEdited, motivo }) {
+    const newAlbum = {
+      ...albumEdited,
+      motivoCancelacion: motivo,
+    };
+    const updatedAlbums = updateAlbums.map((album) =>
+      album._id === newAlbum._id ? newAlbum : album
+    );
+    dispatch(updateAlbumList(updatedAlbums));
+
+  }
 
 
   const updateAlbums = props.albums;
@@ -97,10 +124,10 @@ const DirectoryTable = (props) => {
         <tbody>
           {updateAlbums.length > 0 ? (
             updateAlbums.map((album) => {
-              const isAllowedState = [STATE_SENDED]
-                .includes(album.estado);
+              const isAllowedState = album.estado === STATE_SENDED;
               const isAllowedStateAdmin = [STATE_SENDED, STATE_DISPATCH]
                 .includes(album.estado);
+              const isCanceled = album.estado === STATE_CANCELED;
               return (
                 <tr key={album._id}>
                   <td>{album._id}</td>
@@ -109,9 +136,16 @@ const DirectoryTable = (props) => {
                   <td>{album.shipping.city + " - " + album.shipping.address}</td>
                   <td>{album.estado}</td>
                   <td>{album.courier}</td>
-                  <td>{album.motivoCancelacion}</td>
+                  <td>{!isCanceled || isUser ? album.motivoCancelacion :
+                    <textarea
+                      id="motivoCancelacion"
+                      value={album.motivoCancelacion}
+                      onChange={(event) => handleMotivoCancelacionChange({ albumEdited: album, motivo: event.target.value })}
+                      required
+                    ></textarea>
+                  }</td>
                   <td>
-                    {isUser &&  isAllowedState &&(
+                    {isUser && isAllowedState && (
                       <EditIcon
                         className="icon"
                         aria-hidden="true"
@@ -119,7 +153,12 @@ const DirectoryTable = (props) => {
                       />
                     )}
                     {!isUser && isAllowedStateAdmin && (
-                      <CourierList album={album} onCourierChange={editAlbumAdminHandler} />
+                      <OrderOptions
+                        album={album}
+                        onCourierChange={editAlbumAdminHandler}
+                        onCancelChange={cancelAlbumAdminHandler}
+                        onDeleteChange={deleteAlbumAdminHandler}
+                      />
                     )}
                   </td>
                 </tr>
@@ -127,7 +166,7 @@ const DirectoryTable = (props) => {
             })
           ) : (
             <tr>
-             <td colSpan={7}>No Albums</td>
+              <td colSpan={7}>No Albums</td>
             </tr>
           )}
         </tbody>

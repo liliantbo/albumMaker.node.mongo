@@ -9,6 +9,7 @@ export const STATE_DISPATCH="EN DESPACHO";
 export const STATE_DELIVERED="ENTREGADA";
 export const STATE_RETURNED="DEVUELTA POR COURIER";
 export const STATE_CANCELED="CANCELED";
+export const STATE_DELETED="DELETED";
 
 //valores que puede tomar el estado flow
 export const FLOW_LIST = 'list';
