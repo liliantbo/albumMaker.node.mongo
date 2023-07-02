@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from "axios";
+import { Alert, OverlayTrigger, Tooltip  } from 'react-bootstrap';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { listAlbums, updateAlbumList } from './reducers/albumActions';
@@ -8,6 +9,11 @@ import { PAGE_ALBUM, PAGE_STATISTICS, ROL_ADMIN } from './commonComponents/Prope
 
 import AlbumList from './commonComponents/AlbumList';
 import mongoToRedux from './commonComponents/mongoToRedux';
+import { ReactComponent as SaveIcon } from './save.svg';
+
+const loginTooltip = (
+  <Tooltip id="saveTooltip">Guardar</Tooltip>
+);
 
 export default function AlbumMakerAdmin() {
 
@@ -27,6 +33,9 @@ export default function AlbumMakerAdmin() {
   const allAlbumHandler = () => {
     dispatch(listAlbums());
   };
+  const saveHandler = () => {
+    setSave(true);
+  };
 
   const setAlbums=(albumList)=>{
     dispatch(updateAlbumList(albumList));
@@ -37,6 +46,9 @@ export default function AlbumMakerAdmin() {
   const deleteAlbum = (id) => {
     setAlbums(albums.filter((album) => album.id !== id));
   };
+
+   //alert
+   const [save, setSave] = useState(null);
 
   useEffect(() => {
     axios.get("http://localhost:3000/admin")
@@ -78,13 +90,20 @@ export default function AlbumMakerAdmin() {
               Estadisticas
             </button>
           </li>
+          <li className="nav-item me-3">
+            <OverlayTrigger placement="bottom" overlay={loginTooltip}>
+              <button className="btn btn-primary btn-focus shadow-none" onClick={saveHandler}>
+                <SaveIcon aria-hidden="true" />
+              </button>
+            </OverlayTrigger>
+          </li>
         </ul>
       </header >
-      
+      {save && <Alert variant="success">Cambios Almacenados Exitosamente</Alert>}
         <div className="d-flex flex-row " style={{ height: '83vh' }}>
         {renderContent()}          
         </div>
-     
+        
     </div >
   );
 }
