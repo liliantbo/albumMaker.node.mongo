@@ -7,7 +7,7 @@ import BodyMain from '../AlbumBody/BodyMain';
 export default function AlbumMakerCreator() {
  
   return (
-    <div>
+    <div className='w-100'>
       <div className="d-flex flex-row " style={{ height: '83vh' }}>
         <AlbumBody>
           <BodyMain />

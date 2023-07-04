@@ -1,33 +1,40 @@
 const AWS = require('aws-sdk');
 
 AWS.config.update({
-  accessKeyId: 'ASIATIFAYCUFWG4YMQMJ',
-  secretAccessKey: 'lYvCQ7ms979Zj6f0W4NPeQPRABxWcofKuH5vJnwl',
+  accessKeyId: 'ASIATIFAYCUFVJXB2A6S',
+  secretAccessKey: 'AJfJLOZ8wqq/jTwDJ1kcTGs18ktx6tazVcXAeGE6',
   region: 'us-east-1',
-  sessionToken:'FwoGZXIvYXdzEC4aDP1vzHVhmxkvTQmUGCLBAZxPaMoVu+mibAZggm2XMGM+7Y+bTpuuq48WpucU8xpySNU/NTVPO6blhtUnC9+LAwyYbZ6YunUKByAHR/J9JfynP0J6ppgtbzNKpbSFbROpVWKioVoZ/Cz2llE5sgXfPtWm8ciR/hrWQcfNgJGAY5brVK5ojB4tIbbjI+MMjEFRCLwxF9AqZib3uOWM9m5QE4u6hSiKyg83NXdm4OdXTqc+4sdZ4+qPLyn4lmB3PBj8gZ3osi/JoiV8K+MlcLEFB9komJb0pAYyLRMW1xvjwDznwLjhvu2+skT0URLjBLVhKA4+V9pnR3xJDhOV7V/4XVeikVH0SA=='
+  sessionToken:'FwoGZXIvYXdzEKb//////////wEaDL0M0+fk8+6CmjQCYCLBAYeZ95k4HX7q9t0+kNi+yQhiHFQtO7xLqsjbTmWkB9g2wakwX7cdug8swHhFVCgrxYXHLUxpZaQhG/AxnlKBFMpSj1U6xuk4nB1T2F48gJxmvfPJKOvQ7aagntBXiuWCkmLN3Gkio3iUctBCiuXKshrjr4ihm6sc/XF9o5duNZNXCJjd2ITkOKfHf2NIO9DFTnjPyDd5/gYahQxFcEJSUH+xlIF9I8Q2PPxW5zl1WLsb8nkA75YaeMU8vTWYGMDQd7korcaOpQYyLWw+TS1YRKc79I0V1u2Cr+1Jxq+qNEdkq+7/QCwAHtAv1ZjIvzrKhNxr61L/9w=='
 });
 
 const s3 = new AWS.S3();
 
-const uploadToS3 = async (file, fileName) => {
-  if (!file) {
+const uploadToS3 = async (imageListNew, imageUrlList) => {
+  if (!imageListNew || imageListNew.length==0 || imageListNew.length>imageUrlList.length) {
     return;
   }
 
-  const params = {
-    Bucket: 'albummaker',
-    Key: `${fileName}-${Date.now()}`,
-    Body: file
-  };
-
-  try {
-    const { Location } = await s3.upload(params).promise();
-    console.log('Imagen cargada en S3:', Location);
-    return Location;
-  } catch (error) {
-    console.log('Error al cargar la imagen en S3:', error);
-    throw error;
+  for (const index in imageListNew) {
+    if (imageListNew.hasOwnProperty(index)) {
+      const file = imageListNew[index];
+      console.log(`Clave: ${key}, Valor: ${value}`);
+      const params = {
+        Bucket: 'albummaker',
+        Key: `${Date.now()}.${file.name}`,
+        Body: file
+    };
+    try {
+        const { Location } = await s3.upload(params).promise();
+        console.log('cargando a s3', Location);
+        return Location;
+    } catch (error) {
+        console.log("SaveHandler :: uploadingS3 :: Error al ejecutar el uploadToS3")
+        throw(error);
+    }
+    }
   }
+  return imageUrlList;
+  
 };
 
 module.exports = uploadToS3;

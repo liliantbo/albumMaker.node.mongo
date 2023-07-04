@@ -40,6 +40,7 @@ export default function OrderResume() {
       "telephoneS": albumData.shipping.telephone,
       "cityS": albumData.shipping.city,
       "addressS": albumData.shipping.address,
+      //"imageListNew":null,
       "imageUrlList": albumData.imageUrlList,
       "template": albumData.template,
       "estado": albumData.estado,
@@ -47,6 +48,11 @@ export default function OrderResume() {
       "courier": albumData.courier,
       "motivoCancelacion": albumData.motivoCancelacion
     };
+
+    /* const imageListNew = albumData.imageList
+    .map((file, index) => ({ index, file }))
+    .filter((item) => item.file && item.file.status === "NEW"); */
+
     console.log("OrderResume :: SaveAlbum :: imageLuist: ", albumData.imageList);
     const saveNewImages = albumData.imageList.some((file) => file&&file.status === "NEW");
     console.log("OrderResume :: SaveAlbum :: saveNewImage: ", saveNewImages);

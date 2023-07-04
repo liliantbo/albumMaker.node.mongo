@@ -4,10 +4,10 @@ export default async function SaveToS3(imageList) {
 
         let s3=null;
         AWS.config.update({
-            accessKeyId: 'ASIATIFAYCUF677IPY5N',
-            secretAccessKey: 'NddiK4q6rHWoeQq6ZTkpjTadQrIMmCEosKJPJSLQ',
+            accessKeyId: 'ASIATIFAYCUFVJXB2A6S',
+            secretAccessKey: 'AJfJLOZ8wqq/jTwDJ1kcTGs18ktx6tazVcXAeGE6',
             region: 'us-east-1',
-            sessionToken: 'FwoGZXIvYXdzEHEaDG73nfZX3uWz64m85SLBAVRX/LTLxe63bVkp+HTkHNzY9J6vwa1sf6MDk6jH/O0jVUvTDlzGNZY/0GEPPybG1ggGYrbX+9DSitxyI5Bk0nWlDs2k2Jr95A+UBgyR7JfNOEMkFsaFc7DQ9i23uWgqfFNPLW2KBoxenTnqNzP5WYtlvtX2N7E2QZqR1x6GEqdWM65T92pAOuDwRmGQrX7+g3GKxcsDJuGqQDEDi0n5u5v4fsBuIcgavsKh7hsH3B4m4sXhoB21Tnh7S6Jyn4YqmkEo2OiCpQYyLYCpHqcCepvEz34zMYKKbf4EK0DiyYbKgwpddB8rhDg8VGKvGNP0zmRzFobJag=='
+            sessionToken: 'FwoGZXIvYXdzEKb//////////wEaDL0M0+fk8+6CmjQCYCLBAYeZ95k4HX7q9t0+kNi+yQhiHFQtO7xLqsjbTmWkB9g2wakwX7cdug8swHhFVCgrxYXHLUxpZaQhG/AxnlKBFMpSj1U6xuk4nB1T2F48gJxmvfPJKOvQ7aagntBXiuWCkmLN3Gkio3iUctBCiuXKshrjr4ihm6sc/XF9o5duNZNXCJjd2ITkOKfHf2NIO9DFTnjPyDd5/gYahQxFcEJSUH+xlIF9I8Q2PPxW5zl1WLsb8nkA75YaeMU8vTWYGMDQd7korcaOpQYyLWw+TS1YRKc79I0V1u2Cr+1Jxq+qNEdkq+7/QCwAHtAv1ZjIvzrKhNxr61L/9w=='
         });
         try {
             s3 = new AWS.S3();

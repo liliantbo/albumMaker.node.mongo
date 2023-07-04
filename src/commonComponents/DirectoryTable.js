@@ -86,7 +86,7 @@ const DirectoryTable = (props) => {
 
   const deleteAlbumAdminHandler = (newAlbum) => {
     const updatedAlbums = updateAlbums.map((album) =>
-      album._id === newAlbum._id ? newAlbum : album
+      album._id == newAlbum._id ? newAlbum : album
     );
     dispatch(updateAlbumList(updatedAlbums));
   };
