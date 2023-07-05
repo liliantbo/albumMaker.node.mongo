@@ -26,7 +26,7 @@ export default function OrderResume() {
     console.log('OrderResume :: AddAlbum :: albumState: ', albumData);
     const currentDate = format(new Date(), 'yyyyMMddHHmmss');
     const newAlbum = {
-      "albumId": albumData.albumId,
+      "_id": albumData._id,
       "userEmail": albumData.userEmail,
       "fecha": currentDate,
       "identificationNumber": albumData.billing.identificationNumber,
@@ -54,31 +54,35 @@ export default function OrderResume() {
     .filter((item) => item.file && item.file.status === "NEW"); */
 
     console.log("OrderResume :: SaveAlbum :: imageLuist: ", albumData.imageList);
-    const saveNewImages = albumData.imageList.some((file) => file&&file.status === "NEW");
+    const saveNewImages = albumData.imageList.some((file) => file && file.status === "NEW");
     console.log("OrderResume :: SaveAlbum :: saveNewImage: ", saveNewImages);
 
     if (saveNewImages) {
       const uploadedUrls = await SaveToS3(albumData.imageList);
-      console.log("OrderResume :: SaveAlbum :: uploadedUrls:",uploadedUrls);
+      console.log("OrderResume :: SaveAlbum :: uploadedUrls:", uploadedUrls);
       newAlbum.imageUrlList = uploadedUrls;
     }
 
     console.log("OrderResume :: SaveAlbum :: albumNew: ", newAlbum);
 
     return axios
-      .post("http://localhost:3000/clients/album", { newAlbum })
+      .post("http://localhost:3000/client/album", { newAlbum })
       .then((response) => {
-        const data =mongoToRedux(response.data.data);
+        console.log('Response:', response);
+        const data = mongoToRedux(response.data.data);
         console.log('Data:', data);
         console.log("OrderResume :: handleOnClick :: Album almacenado exitosamente");
-        let newAlbumList=albumData.albumList&&[...albumData.albumList];
-        newAlbumList.push(data);
+        const newAlbumList = albumData.albumList.map((album) =>
+          album._id === data._id ? data : album
+        );
+        const albumSaved = newAlbumList.find((album) => album._id === data._id);
+        if (!albumSaved) newAlbumList.push(data);
         dispatch(updateAlbumList(newAlbumList));
         dispatch(saveComplete());
       })
       .catch((error) => {
         console.log('Error:', error);
-        dispatch(processComplete());
+        //dispatch(processComplete());
       });
   };
   return (

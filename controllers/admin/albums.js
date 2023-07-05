@@ -19,15 +19,15 @@ router.post('/album', function (req, res) {
         console.log('Controllers :: Admin :: PostAlbum :: Debe indicar una lista de álbumes');
         return res.status(500).json({ code: 'UE', message: 'Unkwown error' });
     }
-    deleteAlbumList=albums.filter((album)=>album.status==="DELETED");
-    updateAlbumList=albums.filter((album)=>album.status!=="DELETED");
+    deleteAlbumList=albums.filter((album)=>album.estado==="DELETED");
+    updateAlbumList=albums.filter((album)=>album.estado!=="DELETED");
     Albums.deleteAlbumList({albums:deleteAlbumList}, (error, updatedAlbum) => {
         if (error) {
             console.log('Controllers :: Admin :: PostAlbum :: Error updating album:');
             return res.status(500).json({ code: 'UE', message: 'Unkwown error' })
         } else {
-            console.log('Controllers :: Admin :: PostAlbum :: Album updated:');
-            res.json({ code: 'OK', message: 'Saved successfully!', data: updatedAlbum })
+            console.log('Controllers :: Admin :: PostAlbum :: Album deleted:');
+            //res.json({ code: 'OK', message: 'Saved successfully!', data: deletedAlbum })
         }
     });
     Albums.updateAlbumList({albums:updateAlbumList}, (error, updatedAlbum) => {

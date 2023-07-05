@@ -2,7 +2,7 @@ const Albums = require('../schemas/albums');
 
 function createAlbum(albumData, cb) {
   const newfecha = new Date();
-  let newAlbum = { albumData };
+  let newAlbum = { ...albumData };
   newAlbum.fecha = newfecha;
 
   new Albums(newAlbum)
@@ -113,18 +113,19 @@ function updateAlbumList({ albums, courierName }, cb) {
 }
 
 function deleteAlbumList({ albums }, cb) {
+  console.log("Models :: Albums :: deleteAlbumList :: albums", albums);
   const albumIds = albums.map((album) => album._id);
   let filter = { _id: { $in: albumIds } };
   
   console.log("Models :: Albums :: deleteAlbumList :: filter", filter);
 
-  Albums.deleteMany(filter, update)
+  Albums.deleteMany(filter)
     .then((result) => {
-      console.log('Albumes actualizados exitosamente');
+      console.log('Albumes eliminados exitosamente');
       return cb(null, result);
     })
     .catch((error) => {
-      console.error('Error al actualizar los álbumes:', error);
+      console.error('Error al eliminar los albumes:', error);
       return cb(error);
     });
 }
