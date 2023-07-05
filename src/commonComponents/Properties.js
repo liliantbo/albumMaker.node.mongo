@@ -32,6 +32,7 @@ export const THEME_DARK='dark';
 //modelos de template
 export const TEMPLATE_BIRTHDAY='birthday';
 export const TEMPLATE_LOVE='love';
+export const MAX_TEMPLATE_SIZE=6;
 
 //messajes de exito
 export const MESSAGE_PROCESSED='Album no almacenado en MONGO';

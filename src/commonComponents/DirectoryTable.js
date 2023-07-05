@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { editAlbum, updateAlbumList } from '../reducers/albumActions';
 
 import { ReactComponent as EditIcon } from './image-edit-outline.svg';
-import { STATE_SENDED, ROL_USER, STATE_DISPATCH, STATE_CANCELED } from "./Properties";
+import { STATE_SENDED, ROL_USER, STATE_DISPATCH, STATE_CANCELED, MAX_TEMPLATE_SIZE } from "./Properties";
 import OrderOptions from "./OrderOptions";
 
 function convertImageList(imageUrlList) {
@@ -59,6 +59,10 @@ const DirectoryTable = (props) => {
     convertImageList(selectedAlbum.imageUrlList)
       .then((nuevaLista) => {
         console.log("La nueva lista es: ", nuevaLista);
+        //preparo las posciones no usadas listas para edicion
+        while (nuevaLista.length < MAX_TEMPLATE_SIZE) {
+          nuevaLista.push(null);
+        }
         const newAlbum = {
           ...selectedAlbum,
           imageList: nuevaLista
