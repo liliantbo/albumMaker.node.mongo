@@ -5,17 +5,21 @@ import axios from 'axios';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { updateCourierList } from '../reducers/adminActions';
-import { STATE_CANCELED, STATE_DELETED, STATE_DISPATCH } from "./Properties";
+import { ROL_ADMIN, ROL_OPERATOR, STATE_CANCELED, STATE_DELETED, STATE_DISPATCH } from "./Properties";
 
 export default function OrderOptions({ album, onCourierChange, onCancelChange, onDeleteChange }) {
     //redux store
     const courierList = useSelector(state => state.adm.courierList);
+    const user = useSelector(state => state.auth.user);
+    const { rol } = user
+    const isOperador = rol === ROL_OPERATOR;
+    const isAdmin = rol === ROL_ADMIN;
 
     //redux reducer
     const dispatch = useDispatch();
 
     const courierHandler = (newCourier) => {
-        console.log("OrderOptions :: CourierHandler :: newCourier ", newCourier);
+        console.log("OrderOptions :: CourierHandler :: changeCourier to: ", newCourier);
         onCourierChange({
             ...album,
             courier: newCourier,
@@ -57,13 +61,17 @@ export default function OrderOptions({ album, onCourierChange, onCancelChange, o
                     onClick={() => courierHandler(courier.name)}
                 >{courier.name}</Dropdown.Item>
             ))}
-            <Dropdown.Divider />
-            <Dropdown.Item
-                    onClick={() => cancelHandler()}
-                >Cancelar</Dropdown.Item>
-            <Dropdown.Item
-                    onClick={() => deleteHandler()}
-                >Eliminar</Dropdown.Item>
+            {isAdmin &&
+                <>
+                    <Dropdown.Divider />
+                    <Dropdown.Item
+                        onClick={() => cancelHandler()}
+                    >Cancelar</Dropdown.Item>
+                    <Dropdown.Item
+                        onClick={() => deleteHandler()}
+                    >Eliminar</Dropdown.Item>
+                </>
+            }
         </DropdownButton>
     );
 }

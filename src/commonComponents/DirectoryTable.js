@@ -71,9 +71,11 @@ const DirectoryTable = (props) => {
   };
 
   const editAlbumAdminHandler = (newAlbum) => {
+    console.log("DirectoryTable :: editAlbumHandler :: newAlbum: ", newAlbum);
     const updatedAlbums = updateAlbums.map((album) =>
       album._id === newAlbum._id ? newAlbum : album
     );
+    console.log("DirectoryTable :: editAlbumHandler :: newAlbum: ", updatedAlbums);
     dispatch(updateAlbumList(updatedAlbums));
   };
 

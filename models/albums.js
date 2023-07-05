@@ -81,6 +81,7 @@ function getAlbumsById(albumId, cb) {
     })
 }
 
+//actualizar la misma propiedad con el mismo valor en diferentes albumes
 function updateAlbumList({ albums, courierName }, cb) {
   const albumIds = albums.map((album) => album._id);
   let filter = { _id: { $in: albumIds } };
@@ -93,7 +94,7 @@ function updateAlbumList({ albums, courierName }, cb) {
   };
   for (const album of albums) {
     for (const key in album) {
-      if (album[key] !== null) {
+      if (album[key] !== null && key!=="_id") {
         update.$set[key] = album[key];
       }
     }

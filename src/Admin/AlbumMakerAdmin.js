@@ -40,13 +40,15 @@ export default function AlbumMakerAdmin() {
       .post("http://localhost:3000/admin/album", { albums })
       .then((response) => {
         console.log("OrderResume :: handleOnClick :: Album almacenado exitosamente");
-        let updatedAlbumListMongo = response.data.data;
-        const albumList = albums.filter((album) => album.estado !== "DELETED");
-        const newAlbumList = albumList.map((albumActual) => {
-          const albumNuevo = updatedAlbumListMongo.find((updatedAlbum) => updatedAlbum._id === albumActual._id);
-          return albumNuevo ? albumNuevo : albumActual;
-        }
-        );
+        let responseMongo = response.data.data;
+        //no es necesario gestionar la respuesta de mongo porque no retorna
+        //los albumes, solo una estadistica de cuantos fueron actualizados
+        console.log("OrderResume :: handleOnClick :: responseMongo: ", responseMongo);
+        //quitar de la lista los que han sido eliminados para que
+        //no se intenten eliminar nuevamente cuando se presione el boton guardar
+        const newAlbumList = albums.filter((album) => album.estado !== "DELETED");
+        console.log("OrderResume :: handleOnClick :: newAlbumList (sin deleted): ", newAlbumList);
+
         dispatch(updateAlbumList(newAlbumList));
         setSave(true);
       })
