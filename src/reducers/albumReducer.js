@@ -86,14 +86,10 @@ export function albumReducer(state = initialState, action) {
             };
         case 'newAlbum':
             return {
-                ...state,
-                flow: FLOW_NEW,
-                selectedOption: OPTION_ALBUM,
+                ...initialState,
                 userEmail: action.payload.email,
-                fecha: null,
-                imageList: [null, null, null, null, null, null],
-                template: TEMPLATE_BIRTHDAY,
-                estado: STATE_SENDED,
+                albumList: action.payload.albums,
+                flow: FLOW_NEW,
             };
         case 'birthdayTemplate':
             return {
@@ -122,16 +118,16 @@ export function albumReducer(state = initialState, action) {
             };
         case 'listAlbums':
             return {
-                ...state,
-                flow: FLOW_LIST,
+                ...initialState,
+                albumList:action.actualAlbumList
             };
-        case 'editAlbum':
-            return {
-                ...state,
-                ...action.newAlbum,
-                flow: FLOW_NEW,
-                selectedOption: OPTION_ALBUM,
-            };
+            case 'editAlbum':
+                return {
+                    ...state,
+                    ...action.newAlbum,
+                    flow: FLOW_NEW,
+                    selectedOption: OPTION_ALBUM,
+                };
         case 'updateAlbumList':
             return {
                 ...state,

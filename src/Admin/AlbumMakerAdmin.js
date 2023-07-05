@@ -11,12 +11,19 @@ import AlbumList from '../commonComponents/AlbumList';
 import Statistics from './Statistics';
 import mongoToRedux from '../commonComponents/mongoToRedux';
 import { ReactComponent as SaveIcon } from './save.svg';
+import { ReactComponent as ReloadIcon } from './reload.svg';
 
 const loginTooltip = (
   <Tooltip id="saveTooltip">Guardar</Tooltip>
 );
+const reloadTooltip = (
+  <Tooltip id="reloadTooltip">Recargar</Tooltip>
+);
 
 export default function AlbumMakerAdmin() {
+
+  //variable de control del userEffect
+  const [reload, setReload] = useState(true);
 
   //redux store
   const rol = useSelector(state => state.auth.user.rol);
@@ -34,6 +41,10 @@ export default function AlbumMakerAdmin() {
   const allAlbumHandler = () => {
     dispatch(showAlbums());
   };
+
+  const reloadHandler=()=>{
+    setReload(prevValue => !prevValue);
+  }
 
   const saveHandler = () => {
     return axios
@@ -80,7 +91,7 @@ export default function AlbumMakerAdmin() {
       .catch((error) => {
         console.error("ALbumMakerAdmin :: useEffect :: error: ", error);
       });
-  }, []);
+  }, [reload]);
 
   const renderContent = () => {
     switch (actualPage) {
@@ -111,6 +122,14 @@ export default function AlbumMakerAdmin() {
               </button>
             </li>
           )}
+          <li className="nav-item me-3">
+              <OverlayTrigger placement="bottom" overlay={reloadTooltip}>
+                <button className="btn btn-primary btn-focus shadow-none" 
+                onClick={reloadHandler}>
+                  <ReloadIcon aria-hidden="true" />
+                </button>
+              </OverlayTrigger>
+            </li>
           {isAlbumPage && (
             <li className="nav-item me-3">
               <OverlayTrigger placement="bottom" overlay={loginTooltip}>

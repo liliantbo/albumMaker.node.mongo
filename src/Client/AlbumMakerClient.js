@@ -20,10 +20,10 @@ export default function AlbumMakerClient() {
   //redux reducer
   const dispatch = useDispatch();
   const newAlbumHandler = () => {
-    dispatch(newAlbum(email));
+    dispatch(newAlbum(email, albums));
   };
   const allAlbumHandler = () => {
-    dispatch(listAlbums());
+    dispatch(listAlbums(albums));
   };
   const setAlbums=(albumList)=>{
     dispatch(updateAlbumList(albumList));

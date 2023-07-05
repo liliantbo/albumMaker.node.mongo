@@ -26,9 +26,9 @@ export const saveComplete = () => {
   return { type: 'saveComplete' };
 };
 
-export const newAlbum = (email) => {
+export const newAlbum = (email, albums) => {
   return { type: 'newAlbum', 
-          payload: {email} };
+          payload: {email, albums} };
 };
 export const changeTheme = () => {
   return { type: 'changeTheme' };
@@ -57,12 +57,17 @@ export const updateShipping = (shipping) => {
     newShipping: shipping
   }
 }
-export const listAlbums = () => {
-  return { type: 'listAlbums' };
+export const listAlbums = (albums) => {
+  return {
+    type: 'listAlbums',
+    actualAlbumList: albums
+  };
 };
 export const editAlbum = (selectedAlbum) => {
-  return { type: 'editAlbum', 
-          newAlbum: selectedAlbum };
+  return {
+    type: 'editAlbum',
+    newAlbum: selectedAlbum
+  };
 };
 export const updateAlbumList = (albumList) => {
   return {
@@ -72,8 +77,8 @@ export const updateAlbumList = (albumList) => {
 }
 export const changeCourier = (courier) => {
   return {
-      type: 'changeCourier',
-      newCourier:courier
+    type: 'changeCourier',
+    newCourier: courier
   };
 };
 
