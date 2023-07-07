@@ -12,6 +12,7 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }))
+app.use(express.json({ limit: '10mb' }));
 
 const bodyParser = require('body-parser');
 const path = require('path');

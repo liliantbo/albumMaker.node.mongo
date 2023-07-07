@@ -30,7 +30,7 @@ const initialState = {
         "address": ''
     },
     imageList: [null, null, null, null, null, null],
-    imageUrlList: null,
+    imageUrlList: [],
     estado: STATE_SENDED,
     id: '',
     userEmail: '',

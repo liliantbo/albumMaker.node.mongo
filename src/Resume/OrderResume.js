@@ -40,7 +40,7 @@ export default function OrderResume() {
       "telephoneS": albumData.shipping.telephone,
       "cityS": albumData.shipping.city,
       "addressS": albumData.shipping.address,
-      //"imageListNew":null,
+      "imageListNew": null,
       "imageUrlList": albumData.imageUrlList,
       "template": albumData.template,
       "estado": albumData.estado,
@@ -49,11 +49,25 @@ export default function OrderResume() {
       "motivoCancelacion": albumData.motivoCancelacion
     };
 
-    /* const imageListNew = albumData.imageList
-    .map((file, index) => ({ index, file }))
-    .filter((item) => item.file && item.file.status === "NEW"); */
+    //seteo las imagenes nuevas que deben ser cargadas al s3
 
-    console.log("OrderResume :: SaveAlbum :: imageLuist: ", albumData.imageList);
+    
+    newAlbum.imageListNew = [...albumData.imageList]
+    .map((file, index) => (
+      { index, file }))
+    .filter((item) => item.file && item.file.status === "NEW");
+
+    /*for (let i = 0; i < albumData.imageList.length; i++) {
+      if (albumData.imageList[i].status === 'NEW') {
+        newAlbum.imageListNew.push({
+          index: i,
+          file: albumData.imageList[i].file
+        });
+      }
+    }*/
+
+
+    /*console.log("OrderResume :: SaveAlbum :: imageLuist: ", albumData.imageList);
     const saveNewImages = albumData.imageList.some((file) => file && file.status === "NEW");
     console.log("OrderResume :: SaveAlbum :: saveNewImage: ", saveNewImages);
 
@@ -61,7 +75,7 @@ export default function OrderResume() {
       const uploadedUrls = await SaveToS3(albumData.imageList);
       console.log("OrderResume :: SaveAlbum :: uploadedUrls:", uploadedUrls);
       newAlbum.imageUrlList = uploadedUrls;
-    }
+    }*/
 
     console.log("OrderResume :: SaveAlbum :: albumNew: ", newAlbum);
 
