@@ -18,9 +18,8 @@ router.patch('/album', function (req, res) {
         return res.status(500).json({ code: 'UE', message: 'Unkwown error' });
     }
     updateAlbumList = albums.filter((album) => album.estado !== "DELETED");
-
     for (const album of updateAlbumList) {
-        Albums.updateAlbum( album , (error, updatedAlbum) => {
+        Albums.updateAlbum(album, (error, updatedAlbum) => {
             if (error) {
                 console.log('Controllers :: Admin :: PostAlbum :: Error updating album:', album._id);
                 return res.status(500).json({ code: 'UE', message: 'Unkwown error' })
@@ -30,20 +29,17 @@ router.patch('/album', function (req, res) {
         });
     }
     res.json({ code: 'OK', message: 'Albums Saved successfully!' })
-
 });
 
-router.delete('/album/:id', function (req, res){
-    // const { body: { data } } = res.body;
-    const {id} = req.params;
-    //console.log("request ", req)
+router.delete('/album/:id', function (req, res) {
+    const { id } = req.params;
     console.log('Controllers :: Admin :: DeleteAlbum :: ID:', id);
-    
+
     Albums.deleteAlbumById(id, (error, b) => {
         if (error) {
-            return  res.status(500).json({ code: 'UE', message: 'Unkwown error'})
+            return res.status(500).json({ code: 'UE', message: 'Unkwown error' })
         }
-        res.json({ code: 'OK', message: 'Deleted successfully!', data: b.toJSON()})
+        res.json({ code: 'OK', message: 'Deleted successfully!', data: b.toJSON() })
     });
 });
 

@@ -50,36 +50,32 @@ export default function OrderResume() {
     };
 
     //seteo las imagenes nuevas que deben ser cargadas al s3
-
-    
     newAlbum.imageListNew = [...albumData.imageList]
     .map((file, index) => (
       { index, file }))
     .filter((item) => item.file && item.file.status === "NEW");
 
-    /*for (let i = 0; i < albumData.imageList.length; i++) {
-      if (albumData.imageList[i].status === 'NEW') {
-        newAlbum.imageListNew.push({
-          index: i,
-          file: albumData.imageList[i].file
-        });
-      }
-    }*/
-
-
-    /*console.log("OrderResume :: SaveAlbum :: imageLuist: ", albumData.imageList);
-    const saveNewImages = albumData.imageList.some((file) => file && file.status === "NEW");
-    console.log("OrderResume :: SaveAlbum :: saveNewImage: ", saveNewImages);
-
-    if (saveNewImages) {
-      const uploadedUrls = await SaveToS3(albumData.imageList);
-      console.log("OrderResume :: SaveAlbum :: uploadedUrls:", uploadedUrls);
-      newAlbum.imageUrlList = uploadedUrls;
-    }*/
-
     console.log("OrderResume :: SaveAlbum :: albumNew: ", newAlbum);
-
+    
+    if (albumData._id){
     return axios
+      .patch("http://localhost:3000/client/album", { newAlbum })
+      .then((response) => {
+        console.log('Response:', response);
+        const data = mongoToRedux(response.data.data);
+        console.log('Data:', data);
+        console.log("OrderResume :: handleOnClick :: Album almacenado exitosamente");
+        const newAlbumList = albumData.albumList.map((album) =>
+          album._id === data._id ? data : album
+        );
+        dispatch(updateAlbumList(newAlbumList));
+        dispatch(saveComplete());
+      })
+      .catch((error) => {
+        console.log('Error:', error);
+      });
+    }else{
+      return axios
       .post("http://localhost:3000/client/album", { newAlbum })
       .then((response) => {
         console.log('Response:', response);
@@ -98,6 +94,7 @@ export default function OrderResume() {
         console.log('Error:', error);
         //dispatch(processComplete());
       });
+    }
   };
   return (
     <div className="d-flex flex-column">

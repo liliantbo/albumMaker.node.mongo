@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
     });
 });
 
-router.post('/album', function (req, res) {
+router.patch('/album', function (req, res) {
     const { albums } = req.body;
     const { name } = req.session.courier;
     console.log("Controller :: courier :: albums :: courierName: ", name);
