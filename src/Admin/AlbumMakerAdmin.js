@@ -42,31 +42,42 @@ export default function AlbumMakerAdmin() {
     dispatch(showAlbums());
   };
 
-  const reloadHandler=()=>{
+  const reloadHandler = () => {
     setReload(prevValue => !prevValue);
   }
 
   const saveHandler = () => {
     return axios
-      .post("http://localhost:3000/admin/album", { albums })
+      .patch("http://localhost:3000/admin/album", { albums })
       .then((response) => {
         console.log("OrderResume :: handleOnClick :: Album almacenado exitosamente");
         let responseMongo = response.data.data;
-        //no es necesario gestionar la respuesta de mongo porque no retorna
-        //los albumes, solo una estadistica de cuantos fueron actualizados
         console.log("OrderResume :: handleOnClick :: responseMongo: ", responseMongo);
-        //quitar de la lista los que han sido eliminados para que
-        //no se intenten eliminar nuevamente cuando se presione el boton guardar
-        const newAlbumList = albums.filter((album) => album.estado !== "DELETED");
-        console.log("OrderResume :: handleOnClick :: newAlbumList (sin deleted): ", newAlbumList);
-
-        dispatch(updateAlbumList(newAlbumList));
-        setSave(true);
+        
+        const albumsToDelete = albums.filter((album) => album.estado === "DELETED");
+        const deletePromises = albumsToDelete.map((album) =>
+          axios.delete(`http://localhost:3000/admin/album/${album._id}`)
+        );
+  
+        Promise.all(deletePromises)
+          .then(() => {
+            console.log("OrderResume :: handleOnClick :: Álbumes eliminados exitosamente");
+            // Actualizar la lista de álbumes en el estado
+            const newAlbumList = albums.filter((album) => album.estado !== "DELETED");
+            console.log("OrderResume :: handleOnClick :: newAlbumList (sin deleted): ", newAlbumList);
+            dispatch(updateAlbumList(newAlbumList));
+            setSave(true);
+          })
+          .catch((error) => {
+            console.error("Error al eliminar álbumes:", error);
+          });
       })
       .catch((error) => {
         console.log('Error:', error);
       });
   };
+  
+
   const setAlbums = (albumList) => {
     dispatch(updateAlbumList(albumList));
   }
@@ -123,13 +134,13 @@ export default function AlbumMakerAdmin() {
             </li>
           )}
           <li className="nav-item me-3">
-              <OverlayTrigger placement="bottom" overlay={reloadTooltip}>
-                <button className="btn btn-primary btn-focus shadow-none" 
+            <OverlayTrigger placement="bottom" overlay={reloadTooltip}>
+              <button className="btn btn-primary btn-focus shadow-none"
                 onClick={reloadHandler}>
-                  <ReloadIcon aria-hidden="true" />
-                </button>
-              </OverlayTrigger>
-            </li>
+                <ReloadIcon aria-hidden="true" />
+              </button>
+            </OverlayTrigger>
+          </li>
           {isAlbumPage && (
             <li className="nav-item me-3">
               <OverlayTrigger placement="bottom" overlay={loginTooltip}>

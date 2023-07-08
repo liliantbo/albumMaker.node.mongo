@@ -134,15 +134,16 @@ function deleteAlbumList({ albums }, cb) {
 
 
 // DELETE
-function deleteAlbumById(albumId, cb) {
-  Albums.findOne({ _id: albumId })
-    .then((elems) => {
-      return cb(null, elems);
-    })
-    .catch((error) => {
-      console.log('Error deleting albums by id', error);
+function deleteAlbumById(id, cb) {
+  console.log("Models :: Albums :: deleteAlbumById :: id ", id)
+  Albums.findByIdAndDelete(id)
+  .then((elem) => {
+      return cb(null, elem);
+  })
+  .catch((error) => {
+      console.log('Error:', error);
       return cb(error);
-    })
+  })
 }
 
 exports.createAlbum = createAlbum;
