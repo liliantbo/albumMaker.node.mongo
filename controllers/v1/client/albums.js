@@ -21,8 +21,6 @@ router.get('/', (req, res) => {
 router.post('/album', function (req, res) {
     const { newAlbum } = req.body;
     const { imageListNew, imageUrlList } = newAlbum;
-    console.log('Controllers :: Client :: PostAlbum :: Guardando en S3: ', newAlbum);
-    console.log("imageListNew ", newAlbum.imageListNew);
     imageListNew && imageListNew.length>0 && 
     uploadToS3({ imageListNew:imageListNew , imageUrlList:imageUrlList }, (error, imageUrlListNew) => {
         if (error) {
@@ -30,52 +28,43 @@ router.post('/album', function (req, res) {
             return res.status(500).json({ code: 'UNKNOW_ERROR', message: 'Error inesperado. Intente mas tarde' })
         }
         newAlbum.imageUrlList = [...imageUrlListNew];
-        console.log('Controllers :: Client :: PostAlbum :: imageUrlList:', imageUrlList);
-
+        console.log('Controllers :: Client :: PostAlbum :: imageUrlList:', newAlbum.imageUrlList);
+        console.log("Controllers :: Client :: PostAlbum :: album a crear ",newAlbum);
+        if (!newAlbum._id) {
+            return Albums.createAlbum(newAlbum, (error, b) => {
+                if (error) {
+                    console.log('Controllers :: Client :: PostAlbum :: SAVE :: Resultado: Error')
+                    return res.status(500).json({ code: 'UNKNOW_ERROR', message: 'Error inesperado. Intente mas tarde' })
+                }
+                console.log('Controllers :: Client :: PostAlbum :: SAVE :: Resultado: Creado exitosamente')
+                res.status(200).json({ code: 'OK', message: 'Album creado exitosamente!', data: b.toJSON() })
+            });
+        }
     });
-    console.log('Controllers :: Client :: PostAlbum :: Guardando en Mongo: ', newAlbum);
-    console.log('Controllers :: Client :: PostAlbum :: guardar/actualizar :', newAlbum._id)
-    if (!newAlbum._id) {
-        return Albums.createAlbum(newAlbum, (error, b) => {
-            if (error) {
-                console.log('Controllers :: Client :: PostAlbum :: SAVE :: Resultado: Error')
-                return res.status(500).json({ code: 'UNKNOW_ERROR', message: 'Error inesperado. Intente mas tarde' })
-            }
-            console.log('Controllers :: Client :: PostAlbum :: SAVE :: Resultado: Saved successfully!')
-            res.status(200).json({ code: 'OK', message: 'Album creado exitosamente!', data: b.toJSON() })
-        });
-    }
-    return res.status(500).json({ code: 'UNKNOW_ERROR', message: 'Error inesperado. Intente mas tarde' })
 })
 
 router.patch('/album', function (req, res) {
     const { newAlbum } = req.body;
     const { imageListNew, imageUrlList } = newAlbum;
-    console.log('Controllers :: Client :: PostAlbum :: Guardando en S3: ', newAlbum);
-    console.log("imageListNew ", newAlbum.imageListNew);
     imageListNew && imageListNew.length>0 && 
     uploadToS3({ imageListNew:imageListNew , imageUrlList:imageUrlList }, (error, imageUrlListNew) => {
         if (error) {
-            console.log('Controllers :: Client :: PostAlbum :: saveImageToS3 :: Resultado: Error')
+            console.log('Controllers :: Client :: PatchAlbum :: saveImageToS3 :: Resultado: Error')
             return res.status(500).json({ code: 'UNKNOW_ERROR', message: 'Error inesperado. Intente mas tarde' })
         }
         newAlbum.imageUrlList = [...imageUrlListNew];
-        console.log('Controllers :: Client :: PostAlbum :: imageUrlList:', imageUrlList);
-
+        console.log('Controllers :: Client :: PatchAlbum :: imageUrlList:', imageUrlList);
+        if (newAlbum._id) {
+            return Albums.updateAlbum(newAlbum, (error, b) => {
+                if (error) {
+                    console.log('Controllers :: Client :: PatchAlbum :: UPDATE :: Resultado: Error')
+                    return res.status(500).json({ code: 'UNKNOW_ERROR', message: 'Error inesperado. Intente mas tarde' })
+                }
+                console.log('Controllers :: Client :: PatchAlbum :: UPDATE :: Resultado: Actualizado exitosamente')
+                res.status(200).json({ code: 'OK', message: 'Album actualizado exitosamente', data: b.toJSON() })
+            });
+        }
     });
-    console.log('Controllers :: Client :: PostAlbum :: Guardando en Mongo: ', newAlbum);
-    console.log('Controllers :: Client :: PostAlbum :: guardar/actualizar :', newAlbum._id)
-    if (newAlbum._id) {
-        return Albums.updateAlbum(newAlbum, (error, b) => {
-            if (error) {
-                console.log('Controllers :: Client :: PostAlbum :: UPDATE :: Resultado: Error')
-                return res.status(500).json({ code: 'UNKNOW_ERROR', message: 'Error inesperado. Intente mas tarde' })
-            }
-            console.log('Controllers :: Client :: PostAlbum :: UPDATE :: Resultado: Update successfully!')
-            res.status(200).json({ code: 'OK', message: 'Album actualizado exitosamente', data: b.toJSON() })
-        });
-    }
-    return res.status(500).json({ code: 'UNKNOW_ERROR', message: 'Error inesperado. Intente mas tarde' })
 })
 
 module.exports = router;
