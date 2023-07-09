@@ -7,6 +7,7 @@ import { updateAlbumList } from '../reducers/albumActions';
 import { showAlbums, showStatistics } from '../reducers/adminActions';
 import { PAGE_ALBUM, PAGE_STATISTICS, ROL_ADMIN } from '../commonComponents/Properties';
 
+import AlbumFooter from '../commonComponents/AlbumFooter';
 import AlbumList from '../commonComponents/AlbumList';
 import Statistics from './Statistics';
 import mongoToRedux from '../commonComponents/mongoToRedux';
@@ -43,6 +44,7 @@ export default function AlbumMakerAdmin() {
   };
 
   const reloadHandler = () => {
+    setSave(false);
     setReload(prevValue => !prevValue);
   }
 
@@ -119,32 +121,32 @@ export default function AlbumMakerAdmin() {
       <header className="d-flex flex-row bg-black bd-highlight">
         <ul className="nav flex-row d-flex p-0 bd-highlight 
         justify-content-start align-items-stretch">
-          <li className="nav-item d-flex align-items-stretch me-3">
+          <li className="py-1 nav-item d-flex align-items-stretch me-3">
             <button className={`btn btn-dark btn-focus shadow-none ${isAlbumPage ? 'bg-secondary' : ''}`}
               onClick={allAlbumHandler}>
               Ordenes
             </button>
           </li>
           {isAdminUser && (
-            <li className="nav-item me-3">
+            <li className="py-1 nav-item me-3">
               <button className={`btn btn-dark btn-focus shadow-none ${!isAlbumPage ? 'bg-secondary' : ''}`}
                 onClick={statisticsHandler}>
                 Estadisticas
               </button>
             </li>
           )}
-          <li className="nav-item me-3">
+          <li className="py-1 nav-item me-3">
             <OverlayTrigger placement="bottom" overlay={reloadTooltip}>
-              <button className="btn btn-primary btn-focus shadow-none"
+              <button className="p-1 btn btn-primary btn-focus shadow-none"
                 onClick={reloadHandler}>
                 <ReloadIcon aria-hidden="true" />
               </button>
             </OverlayTrigger>
           </li>
           {isAlbumPage && (
-            <li className="nav-item me-3">
+            <li className="py-1 nav-item me-3">
               <OverlayTrigger placement="bottom" overlay={loginTooltip}>
-                <button className="btn btn-primary btn-focus shadow-none" onClick={saveHandler}>
+                <button className="p-1 btn btn-primary btn-focus shadow-none" onClick={saveHandler}>
                   <SaveIcon aria-hidden="true" />
                 </button>
               </OverlayTrigger>
@@ -152,10 +154,10 @@ export default function AlbumMakerAdmin() {
         </ul>
       </header >
       {save && <Alert variant="success">Cambios Almacenados Exitosamente</Alert>}
-      <div className="d-flex flex-row " style={{ height: '83vh' }}>
+      <div className="d-flex flex-row justify-content-center w-100" style={{ height: '80vh' }}>
         {renderContent()}
       </div>
-
+      <AlbumFooter />
     </div >
   );
 }

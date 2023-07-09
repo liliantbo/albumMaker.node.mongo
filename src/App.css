@@ -95,7 +95,17 @@
 
 .logo {
   font-family: 'Akaya Kanadaka', sans-serif;
-  font-size: 2em;
+  font-size: 1em;
   letter-spacing: 2px;
 }
+
+.table-container {
+  position: relative;
+}
+
+.table-body {
+  height: 400px; /* Altura máxima del cuerpo de la tabla */
+  overflow-y: auto; /* Agrega scroll vertical si el contenido excede la altura máxima */
+}
+
 

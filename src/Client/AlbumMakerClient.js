@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { newAlbum, listAlbums, updateAlbumList } from '../reducers/albumActions';
 import { FLOW_LIST } from '../commonComponents/Properties';
 
+import AlbumFooter from '../commonComponents/AlbumFooter';
 import AlbumList from '../commonComponents/AlbumList';
 import AlbumMakerCreator from './AlbumMakerCreator';
 import mongoToRedux from '../commonComponents/mongoToRedux';
@@ -25,7 +26,7 @@ export default function AlbumMakerClient() {
   const allAlbumHandler = () => {
     dispatch(listAlbums(albums));
   };
-  const setAlbums=(albumList)=>{
+  const setAlbums = (albumList) => {
     dispatch(updateAlbumList(albumList));
   }
   const editAlbum = (album) => {
@@ -39,7 +40,7 @@ export default function AlbumMakerClient() {
     axios.get("http://localhost:3000/client")
       .then((response) => {
         console.log("ALbumMakerClient :: useEffect :: response: ", response);
-        const data = response.data.map((album) =>mongoToRedux(album));
+        const data = response.data.map((album) => mongoToRedux(album));
         console.log("ALbumMakerClient :: useEffect :: data: ", data);
         setAlbums(data);
       })
@@ -47,15 +48,15 @@ export default function AlbumMakerClient() {
         console.error("ALbumMakerClient :: useEffect :: error: ", error);
       });
   }, []);
-  
+
   const renderContent = () => {
     switch (flow) {
-        case FLOW_LIST:
-            return <AlbumList albums={albums} 
-            editAlbum={editAlbum} 
-            deleteAlbum={deleteAlbum}/>;       
-        default:
-            return <AlbumMakerCreator />;
+      case FLOW_LIST:
+        return <AlbumList albums={albums}
+          editAlbum={editAlbum}
+          deleteAlbum={deleteAlbum} />;
+      default:
+        return <AlbumMakerCreator />;
     }
   }
 
@@ -78,9 +79,12 @@ export default function AlbumMakerClient() {
           </li>
         </ul>
       </header >
-        <div className="d-flex flex-row " style={{ height: '83vh' }}>
-        {renderContent()} 
+      <div className="d-flex flex-row " style={{ height: '81vh' }}>
+        <div className='w-100'>
+          {renderContent()}
         </div>
+      </div >
+      <AlbumFooter />
     </div >
   );
 }

@@ -55,7 +55,7 @@ export default function OrderOptions({ album, onCourierChange, onCancelChange, o
     }, []);
 
     return (
-        <DropdownButton id="dropdown-basic-button" title="Modificar" size="sm">
+        <DropdownButton id="dropdown-basic-button" title={`${isAdmin?'Modificar Orden':'Asignar Courier'}`} size="sm">
             {courierList && courierList.map((courier, index) => (
                 <Dropdown.Item key={index}
                     onClick={() => courierHandler(courier.name)}

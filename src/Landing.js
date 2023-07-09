@@ -91,14 +91,14 @@ export default function Landing() {
   return (
     <div className={`App ${theme}`}>
 
-      <header className="d-flex flex-row bg-primary bd-highlight" style={{ height: '10vh' }}>
-        <div className="me-auto p-2 bd-highlight">
+      <header className="d-flex flex-row bg-primary bd-highlight" style={{ height: '6vh' }}>
+        <div className="me-auto p-1 bd-highlight">
           <p className="logo text-light">Album Maker</p>
         </div>
-        <ul className="nav flex-row d-flex p-2 bd-highlight justify-content-end align-items-stretch">
+        <ul className="nav flex-row d-flex p-0 bd-highlight justify-content-end align-items-stretch">
           <li className="nav-item me-3">
             <OverlayTrigger placement="bottom" overlay={loggedIn?logoutTooltip:loginTooltip}>
-              <button className="btn btn-primary btn-focus shadow-nonebutton-add"
+              <button className="pb-1 btn btn-primary btn-focus shadow-nonebutton-add"
                 onClick={loggedIn?(()=>logoutUser(user)):toggleShowLoginModal}
               >
                 {loggedIn?<LogoutIcon aria-hidden="true" />:<LoginIcon aria-hidden="true" />}
@@ -117,7 +117,7 @@ export default function Landing() {
           </li>
           <li className="nav-item me-3">
             <OverlayTrigger placement="bottom" overlay={changeThemeTooltip}>
-              <button className="btn btn-primary btn-focus shadow-none" onClick={changeThemeHandler}>
+              <button className="pb-1 btn btn-primary btn-focus shadow-none" onClick={changeThemeHandler}>
                 <ToogleThemeIcon aria-hidden="true" />
               </button>
             </OverlayTrigger>
