@@ -44,7 +44,7 @@ export default function OrderOptions({ album, onCourierChange, onCancelChange, o
     useEffect(() => {
         axios.get("http://localhost:3000/v1/couriers")
             .then((response) => {
-                const courierListMongo = response.data;
+                const courierListMongo = response.data.data;
                 console.log("OrderOptions :: useEffect :: response: ", response);
                 console.log("OrderOptions :: CourierListMongo: ", courierListMongo);
                 dispatch(updateCourierList(courierListMongo));

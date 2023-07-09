@@ -97,7 +97,7 @@ export default function AlbumMakerAdmin() {
     axios.get("http://localhost:3000/v1/admin")
       .then((response) => {
         console.log("ALbumMakerAdmin :: useEffect :: response: ", response);
-        const data = response.data.map((album) => mongoToRedux(album));
+        const data = response.data.data.map((album) => mongoToRedux(album));
         console.log("ALbumMakerAdmin :: useEffect :: data: ", data);
         setAlbums(data);
       })

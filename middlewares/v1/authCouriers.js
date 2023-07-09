@@ -8,12 +8,12 @@ const authCouriers = (req, res, next) => {
 
     if (!user) {
         console.log("Middlewares :: authCourier :: Credenciales de autenticación no proporcionadas");
-        return res.status(401).send('Autenticación requerida');
+        return res.status(401).json({ code: 'NOT_AUTHORIZED', message: 'Autenticacion requerida' });
     }
 
     user && Couriers.getCourierByUserName(user, (error, courier) => {
         if (error) {
-            return res.status(500).json({ code: 'UE', message: 'Unknown Error!' })
+            return res.status(500).json({ code: 'UNKNOW_ERROR', message: 'Error inesperado. Intente mas tarde' })
         }
         console.log("Middleware :: authCourier :: Mongo: ", courier)
         if (pass && courier && courier.password == pass) {
@@ -22,13 +22,13 @@ const authCouriers = (req, res, next) => {
                 if (err) {
                     console.log("Middlewares :: authCourier :: Acceso negado");
                     res.set('WWW-Authenticate', 'Basic realm="Ingrese sus credenciales"');
-                    return res.status(401).send('Autenticación requerida');
+                    return res.status(401).json({ code: 'NOT_AUTHORIZED', message: 'Autenticacion requerida' });
                 }
                 console.log("Middlewares :: authCourier :: Acceso concedido");
                 return next();
             });
         }
-        return res.status(401).send('Autenticación requerida');
+        return res.status(401).json({ code: 'NOT_AUTHORIZED', message: 'Autenticacion requerida' });
     });
 };
 

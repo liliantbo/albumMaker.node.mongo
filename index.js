@@ -33,9 +33,9 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 app.use('/v1/users', AdminUsers)
-app.use('/v1/couriers', AdminCouriers)
-app.use('/v1/admin', AdminAlbums)
-app.use('/v1/client', ClientAlbums)
+app.use('/v1/couriers', RequireSession, AdminCouriers)
+app.use('/v1/admin', RequireSession, AdminAlbums)
+app.use('/v1/client', RequireSession, ClientAlbums)
 app.use('/v1/courier',AuthCouriers,  CourierAlbums)
 
 app.use(express.static(path.join(__dirname, "build")));

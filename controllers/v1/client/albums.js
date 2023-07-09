@@ -3,10 +3,8 @@ const router = express.Router();
 const Albums = require('../../../models/v1/albums');
 const uploadToS3 = require('../../../models/v1/images');
 
+//Api para obtener todos los albumes del un cliente
 router.get('/', (req, res) => {
-    if (!req.session.user){
-        return res.status(401).json({ code: 'NOT_AUTHORIZED', message: 'No ha iniciado sesión' });
-    }
     const { email } = req.session.user;
     console.log('Controllers :: Client :: getAlbums :: email:', email);
     return Albums.getAlbumsByUserEmail(email, (error, albums) => {
@@ -18,6 +16,7 @@ router.get('/', (req, res) => {
     });
 });
 
+//Api para la creacion de un nuevo album
 router.post('/album', function (req, res) {
     const { newAlbum } = req.body;
     const { imageListNew, imageUrlList } = newAlbum;
@@ -43,6 +42,7 @@ router.post('/album', function (req, res) {
     });
 })
 
+//Api para actualizar un album existente
 router.patch('/album', function (req, res) {
     const { newAlbum } = req.body;
     const { imageListNew, imageUrlList } = newAlbum;
