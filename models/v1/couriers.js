@@ -1,4 +1,4 @@
-const Couriers = require('../schemas/couriers');
+const Couriers = require('../../schemas/v1/couriers');
 
 function getCourier(cb) {
     Couriers.find({})

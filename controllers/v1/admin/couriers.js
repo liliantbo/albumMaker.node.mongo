@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Couriers = require('../../models/couriers')
+const Couriers = require('../../../models/v1/couriers')
 const nodecache = require('node-cache');
 const cache = new nodecache({stdTTL: 60})
 

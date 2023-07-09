@@ -1,5 +1,5 @@
 const auth = require('basic-auth');
-const Couriers = require('../models/couriers');
+const Couriers = require('../../models/v1/couriers');
 
 const authCouriers = (req, res, next) => {
     console.log("Middlewares :: authCourier :: Validando credenciales");

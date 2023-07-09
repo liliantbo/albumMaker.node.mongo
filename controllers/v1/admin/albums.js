@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Albums = require('../../models/albums');
+const Albums = require('../../../models/v1/albums');
 
 router.get('/', (req, res) => {
     return Albums.getAllAlbums((error, elems) => {

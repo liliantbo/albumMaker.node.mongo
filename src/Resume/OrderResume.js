@@ -59,7 +59,7 @@ export default function OrderResume() {
     
     if (albumData._id){
     return axios
-      .patch("http://localhost:3000/client/album", { newAlbum })
+      .patch("http://localhost:3000/v1/client/album", { newAlbum })
       .then((response) => {
         console.log('Response:', response);
         const data = mongoToRedux(response.data.data);
@@ -76,7 +76,7 @@ export default function OrderResume() {
       });
     }else{
       return axios
-      .post("http://localhost:3000/client/album", { newAlbum })
+      .post("http://localhost:3000/v1/client/album", { newAlbum })
       .then((response) => {
         console.log('Response:', response);
         const data = mongoToRedux(response.data.data);

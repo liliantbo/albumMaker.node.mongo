@@ -50,7 +50,7 @@ export default function AlbumMakerAdmin() {
 
   const saveHandler = () => {
     return axios
-      .patch("http://localhost:3000/admin/album", { albums })
+      .patch("http://localhost:3000/v1/admin/album", { albums })
       .then((response) => {
         console.log("OrderResume :: handleOnClick :: Album almacenado exitosamente");
         let responseMongo = response.data.data;
@@ -58,7 +58,7 @@ export default function AlbumMakerAdmin() {
         
         const albumsToDelete = albums.filter((album) => album.estado === "DELETED");
         const deletePromises = albumsToDelete.map((album) =>
-          axios.delete(`http://localhost:3000/admin/album/${album._id}`)
+          axios.delete(`http://localhost:3000/v1/admin/album/${album._id}`)
         );
   
         Promise.all(deletePromises)
@@ -94,7 +94,7 @@ export default function AlbumMakerAdmin() {
   const [save, setSave] = useState(null);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/admin")
+    axios.get("http://localhost:3000/v1/admin")
       .then((response) => {
         console.log("ALbumMakerAdmin :: useEffect :: response: ", response);
         const data = response.data.map((album) => mongoToRedux(album));

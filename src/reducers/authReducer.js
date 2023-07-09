@@ -16,6 +16,8 @@ const initialState = {
 };
 
 const authReducer = (state = initialState, action) => {
+  console.log("AuthReducer :: Action :: action: ", action);
+  console.log("AuthReducer :: Action :: state: ", state);
   switch (action.type) {
     case 'LOGIN':
       return {

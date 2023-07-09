@@ -1,4 +1,4 @@
-const Albums = require('../schemas/albums');
+const Albums = require('../../schemas/v1/albums');
 
 function createAlbum(albumData, cb) {
   const newfecha = new Date();

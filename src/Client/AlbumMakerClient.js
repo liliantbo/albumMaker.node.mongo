@@ -37,10 +37,10 @@ export default function AlbumMakerClient() {
   };
 
   useEffect(() => {
-    axios.get("http://localhost:3000/client")
+    axios.get("http://localhost:3000/v1/client")
       .then((response) => {
         console.log("ALbumMakerClient :: useEffect :: response: ", response);
-        const data = response.data.map((album) => mongoToRedux(album));
+        const data = response.data.data.map((album) => mongoToRedux(album));
         console.log("ALbumMakerClient :: useEffect :: data: ", data);
         setAlbums(data);
       })

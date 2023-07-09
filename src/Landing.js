@@ -43,10 +43,10 @@ export default function Landing() {
   const loginUser = (user) => {
     toggleShowLoginModal();
     axios
-      .post("http://localhost:3000/users/login", { user })
+      .post("http://localhost:3000/v1/users/login", { user })
       .then((response) => {
-        dispatch(login(response.data));
-        console.log('Data:', response.data)
+        dispatch(login(response.data.data));
+        console.log('Landing :: Login :: usuarioMongo:', response.data.data)
         setError(null);
       }).catch((error) => {
         console.error('Error:', error);
@@ -56,7 +56,7 @@ export default function Landing() {
   
   const logoutUser = (user) => {
     axios
-      .post("http://localhost:3000/users/logout", { user })
+      .post("http://localhost:3000/v1/users/logout", { user })
       .then((response) => {
         dispatch(logout());
         console.log('Data:', response.data)

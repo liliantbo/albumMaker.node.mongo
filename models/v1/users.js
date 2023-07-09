@@ -1,4 +1,4 @@
-const Users = require('../schemas/users');
+const Users = require('../../schemas/v1/users');
 
 function getUser(cb) {
     Users.find({})

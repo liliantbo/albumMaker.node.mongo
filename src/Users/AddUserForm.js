@@ -56,13 +56,13 @@ const AddUserForm = (props) => {
         />
       </div>
       <div className="form-group">
-        <label>Usuario</label>
+        <label>Email</label>
         <input
           type="text"
-          name="username"
-          value={user.username}
+          name="email"
+          value={user.email}
           onChange={handleInputChange}
-          pattern="[a-zA-Z0-9-]+"
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
           required={isRequired}
         />
       </div>
@@ -74,17 +74,6 @@ const AddUserForm = (props) => {
           value={user.password}
           onChange={handleInputChange}
           pattern="[a-zA-Z0-9-]+"
-          required={isRequired}
-        />
-      </div>
-      <div className="form-group">
-        <label>Email</label>
-        <input
-          type="text"
-          name="email"
-          value={user.email}
-          onChange={handleInputChange}
-          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
           required={isRequired}
         />
       </div>

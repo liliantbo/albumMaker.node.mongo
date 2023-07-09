@@ -30,7 +30,7 @@ export default function Login() {
     toggleShowAddModal();
 
     axios
-      .post("http://localhost:3000/users", { user })
+      .post("http://localhost:3000/v1/users", { user })
       .then((response) => {
         console.log('Data:', response)
         setSuccess("¡Registro exitoso! 🎉 Por favor, inicia sesión para comenzar a dar vida a tus álbumes en Album Maker. ✨");
@@ -41,7 +41,7 @@ export default function Login() {
   const loginUser = (user) => {
     toggleShowLoginModal();
     axios
-      .post("http://localhost:3000/users/login", { user })
+      .post("http://localhost:3000/v1/users/login", { user })
       .then((response) => {
         dispatch(login(response.data));
         console.log('Data:', response.data)

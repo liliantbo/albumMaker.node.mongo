@@ -1,17 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const Albums = require('../../models/albums');
-const uploadToS3 = require('../../models/images');
+const Albums = require('../../../models/v1/albums');
+const uploadToS3 = require('../../../models/v1/images');
 
 router.get('/', (req, res) => {
+    if (!req.session.user){
+        return res.status(401).json({ code: 'NOT_AUTHORIZED', message: 'No ha iniciado sesión' });
+    }
     const { email } = req.session.user;
     console.log('Controllers :: Client :: getAlbums :: email:', email);
-    return Albums.getAlbumsByUserEmail(email, (error, elems) => {
+    return Albums.getAlbumsByUserEmail(email, (error, albums) => {
         if (error) {
-            return res.status(500).json({ code: 'UE', message: 'Unknown error' })
+            return res.status(500).json({ code: 'UNKNOW_ERROR', message: 'Error inesperado. Intente mas tarde' })
         }
-        console.log('Controllers :: Client :: getAlbums :: response:', elems);
-        res.json(elems);
+        console.log('Controllers :: Client :: getAlbums :: response:', albums);
+        res.status(200).json({ code: 'OK', message: 'Consulta exitosa', data: albums})
     });
 });
 
@@ -24,7 +27,7 @@ router.post('/album', function (req, res) {
     uploadToS3({ imageListNew:imageListNew , imageUrlList:imageUrlList }, (error, imageUrlListNew) => {
         if (error) {
             console.log('Controllers :: Client :: PostAlbum :: saveImageToS3 :: Resultado: Error')
-            return res.status(500).json({ code: 'UE', message: 'Unkwown error' })
+            return res.status(500).json({ code: 'UNKNOW_ERROR', message: 'Error inesperado. Intente mas tarde' })
         }
         newAlbum.imageUrlList = [...imageUrlListNew];
         console.log('Controllers :: Client :: PostAlbum :: imageUrlList:', imageUrlList);
@@ -36,13 +39,13 @@ router.post('/album', function (req, res) {
         return Albums.createAlbum(newAlbum, (error, b) => {
             if (error) {
                 console.log('Controllers :: Client :: PostAlbum :: SAVE :: Resultado: Error')
-                return res.status(500).json({ code: 'UE', message: 'Unkwown error' })
+                return res.status(500).json({ code: 'UNKNOW_ERROR', message: 'Error inesperado. Intente mas tarde' })
             }
             console.log('Controllers :: Client :: PostAlbum :: SAVE :: Resultado: Saved successfully!')
-            res.json({ code: 'OK', message: 'Saved successfully!', data: b.toJSON() })
+            res.status(200).json({ code: 'OK', message: 'Album creado exitosamente!', data: b.toJSON() })
         });
     }
-    return res.status(500).json({ code: 'UE', message: 'Unkwown error' })
+    return res.status(500).json({ code: 'UNKNOW_ERROR', message: 'Error inesperado. Intente mas tarde' })
 })
 
 router.patch('/album', function (req, res) {
@@ -54,7 +57,7 @@ router.patch('/album', function (req, res) {
     uploadToS3({ imageListNew:imageListNew , imageUrlList:imageUrlList }, (error, imageUrlListNew) => {
         if (error) {
             console.log('Controllers :: Client :: PostAlbum :: saveImageToS3 :: Resultado: Error')
-            return res.status(500).json({ code: 'UE', message: 'Unkwown error' })
+            return res.status(500).json({ code: 'UNKNOW_ERROR', message: 'Error inesperado. Intente mas tarde' })
         }
         newAlbum.imageUrlList = [...imageUrlListNew];
         console.log('Controllers :: Client :: PostAlbum :: imageUrlList:', imageUrlList);
@@ -66,13 +69,13 @@ router.patch('/album', function (req, res) {
         return Albums.updateAlbum(newAlbum, (error, b) => {
             if (error) {
                 console.log('Controllers :: Client :: PostAlbum :: UPDATE :: Resultado: Error')
-                return res.status(500).json({ code: 'UE', message: 'Unkwown error' })
+                return res.status(500).json({ code: 'UNKNOW_ERROR', message: 'Error inesperado. Intente mas tarde' })
             }
             console.log('Controllers :: Client :: PostAlbum :: UPDATE :: Resultado: Update successfully!')
-            res.json({ code: 'OK', message: 'Update successfully!', data: b.toJSON() })
+            res.status(200).json({ code: 'OK', message: 'Album actualizado exitosamente', data: b.toJSON() })
         });
     }
-    return res.status(500).json({ code: 'UE', message: 'Unkwown error' })
+    return res.status(500).json({ code: 'UNKNOW_ERROR', message: 'Error inesperado. Intente mas tarde' })
 })
 
 module.exports = router;

@@ -1,7 +1,7 @@
 const express = require("express");
 const engine = require('ejs-locals');
 const session = require('express-session')
-const authCouriers = require('./middlewares/authCouriers');
+
 
 const db = require('./db');
 
@@ -18,11 +18,13 @@ const bodyParser = require('body-parser');
 const path = require('path');
 
 const port = 3000;
-const AdminUsers = require('./controllers/admin/users')
-const AdminAlbums = require('./controllers/admin/albums')
-const AdminCouriers = require('./controllers/admin/couriers')
-const ClientAlbums = require('./controllers/client/albums')
-const CourierAlbums = require('./controllers/courier/albums')
+const AdminUsers = require('./controllers/v1/admin/users')
+const AdminAlbums = require('./controllers/v1/admin/albums')
+const AdminCouriers = require('./controllers/v1/admin/couriers')
+const ClientAlbums = require('./controllers/v1/client/albums')
+const CourierAlbums = require('./controllers/v1/courier/albums')
+const AuthCouriers = require('./middlewares/v1/authCouriers');
+const RequireSession = require ('./middlewares/v1/requireSession')
 
 app.use(bodyParser.json({ type: 'application/json' }))
 
@@ -30,11 +32,11 @@ app.engine('ejs', engine);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
-app.use('/users', AdminUsers)
-app.use('/couriers', AdminCouriers)
-app.use('/admin', AdminAlbums)
-app.use('/client', ClientAlbums)
-app.use('/courier',authCouriers,  CourierAlbums)
+app.use('/v1/users', AdminUsers)
+app.use('/v1/couriers', AdminCouriers)
+app.use('/v1/admin', AdminAlbums)
+app.use('/v1/client', ClientAlbums)
+app.use('/v1/courier',AuthCouriers,  CourierAlbums)
 
 app.use(express.static(path.join(__dirname, "build")));
 
