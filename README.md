@@ -6,7 +6,7 @@ AlbumMaker V2 es un desarrollo frontEnd y Backend que permite cargar fotos y ord
 
 Es un proyecto realizado como tarea para la materia Non-Relational database driven website dictada por el [Ing. Marco Calderon](https://www.linkedin.com/in/markoscalderon) y el [Ing. Leonardo Larrea](https://www.linkedin.com/in/leonardolarreadiaz) en el [Bootcamps FullStack Developer 2023](http://www.bootcamps.espol.edu.ec/) de la [Escuela Superior Politécnica del Litoral (ESPOL)](https://www.espol.edu.ec/).
 
-[AlbumMakerHome][AlbumMakerHome.JPG]
+![AlbumMakerHome][AlbumMakerHome.JPG]
 
 ### Funcionalidades
 
@@ -63,9 +63,9 @@ Documentación de Tecnología utilizada:
 
 Los datos se almacenarán de la siguiente manera:
 
-[S3 Data](S3Data.png)
+![S3 Data](S3Data.png)
 
-[MongoDb](MongoDB.JPG)
+![MongoDb](MongoDB.JPG)
 
 ## Despliegue :: Descargar y Ejecutar el Proyecto
 
