@@ -32,7 +32,7 @@ router.patch('/album', function (req, res) {
             return res.status(500).json({ code: 'UNKNOW_ERROR', message: 'Error inesperado. Intente mas tarde' })
         } else {
             console.log('Controllers :: Courier :: PostAlbum :: Album updated:');
-            res.json({ code: 'OK', message: 'Saved successfully!', data: updatedAlbum })
+            res.status(200).json({ code: 'OK', message: 'Actualizacion exitosa', data: updatedAlbum })
         }
     });
 });

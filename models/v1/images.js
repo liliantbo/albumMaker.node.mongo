@@ -1,10 +1,10 @@
 const AWS = require('aws-sdk');
 
 AWS.config.update({
-    accessKeyId: 'ASIATIFAYCUFZTKJXA5F',
-    secretAccessKey: 'JGIzcsXYpABPmgYN1bUgsVeSmW7yGtcNcPCU8UWR',
+    accessKeyId: 'ASIATIFAYCUFYEATVAWV',
+    secretAccessKey: 'EX8b583BayLaNm3LN/frhGFjehe4qk9vy4Xv/YZv',
     region: 'us-east-1',
-    sessionToken: 'FwoGZXIvYXdzEB8aDHB9Xtzei6WaI8KKayLBARLnU523vaMxR7TTtJ4ep4yUQM1MlkbTDMZgdZmDMdJayxlcytG+qGPpXCQpZ+sMmojUVfCf6sjtvD1lfaWuEgYIRhleZau6fge6EqXO4qNd/ZUUNoFG6NyCofmk7HVq5/bAKJc7aOfxGKoj1p2p5sCPI/6jj0wS9+F+IrIAN/h1+DOMSwfDQYT5UjrvX5DYvBdIZC8QJnOZpOBt8gWy6RJ70adzRosklMUx9y9jbCbugi7avhjsgbIaOvEpPicVMCwowoappQYyLS4gAoe74uJAbt+vkrGprv9A3jrCx6S1U2eIxEqK5LBKlA8ZuTQrus8Sm6iujw=='
+    sessionToken: 'FwoGZXIvYXdzEEQaDAbZIU/ziNOC2A6mGSLBAXhbnaf6Kqcjg3EIz90WHRXS+2Evw9TPwkxNCID+9j2Bszsg6Qxbbu6TX4//v/So/SWDunuQ/LxrgKPIradvEvAk/tG++TbrPYHbl7Stu7AIm8KfQU3DCmXKhHivRfw8Yb4G1dvBBxzpYPG147fZv5zBAuEpt/8KPNzTgJ7dX5UEN3SnKnkLOnB96Hjs6vl8rO1IKlU0FI81cUDkpZd6QJ9hY7pQqMf062OH9xFj0AtcuvYMmytN+Zze3ywrXNRIPboo9pSxpQYyLQBJSHQR66QgsKlZH8nx0XM1hrPJoLtIeErATjLbvEEPY2QExmVRiH6qE6oYAg=='
 });
 
 const s3 = new AWS.S3();

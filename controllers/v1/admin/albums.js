@@ -41,7 +41,7 @@ router.delete('/album/:id', function (req, res) {
         if (error) {
             return res.status(500).json({ code: 'UNKNOW_ERROR', message: 'Error inesperado. Intente mas tarde' })
         }
-        res.json({ code: 'OK', message: 'Deleted successfully!', data: b.toJSON() })
+        res.json({ code: 'OK', message: 'Eliminación exitosa', data: b.toJSON() })
     });
 });
 
